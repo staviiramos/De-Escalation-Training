@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#214FA2">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="42" fill="#5DBE7B"/>
+    <path d="M35 52 L45 62 L67 38" stroke="#F0EBE1" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>De-Escalation Training, CHCR</title>
+  <link rel="stylesheet" href="_ds/organic-e322e280-5d26-4303-81e0-f61d044bc877/styles.css">
+  <script src="_ds/organic-e322e280-5d26-4303-81e0-f61d044bc877/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&amp;family=Jost:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    /* CHCR brand override, colors and type from the CHCR brand style guide, replacing the Organic tokens. */
+    :root {
+      --color-bg: #F0EBE1;
+      --color-surface: #E6DFD0;
+      --color-text: #0C1F3E;
+      --color-accent: #214FA2;
+      --color-accent-2: #5DBE7B;
+
+      --color-neutral-100: #FAF7F2;
+      --color-neutral-200: #F0EBE1;
+      --color-neutral-300: #DDD5C4;
+      --color-neutral-400: #B9AF9C;
+      --color-neutral-500: #93897A;
+      --color-neutral-600: #6B6255;
+      --color-neutral-700: #4C463D;
+      --color-neutral-800: #2E2A25;
+      --color-neutral-900: #1A1714;
+
+      --color-accent-100: #E3EBF8;
+      --color-accent-200: #C4D4F0;
+      --color-accent-300: #9BB6E5;
+      --color-accent-400: #5D82C7;
+      --color-accent-500: #214FA2;
+      --color-accent-600: #1B3F82;
+      --color-accent-700: #15305F;
+      --color-accent-800: #102345;
+      --color-accent-900: #0C1F3E;
+
+      --color-accent-2-100: #E7F6EC;
+      --color-accent-2-200: #C9ECD4;
+      --color-accent-2-300: #A0DDB3;
+      --color-accent-2-400: #7ACD91;
+      --color-accent-2-500: #5DBE7B;
+      --color-accent-2-600: #479863;
+      --color-accent-2-700: #35744A;
+      --color-accent-2-800: #275633;
+      --color-accent-2-900: #1A3A22;
+
+      --font-heading: "Roboto Slab", Georgia, serif;
+      --font-heading-weight: 600;
+      --font-body: "Jost", system-ui, sans-serif;
+    }
+    a { color: var(--color-accent-700); }
+    a:hover { color: var(--color-accent-900); }
+    .cq-radio { display: flex; align-items: flex-start; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--radius-lg); border: 1px solid var(--color-neutral-300); cursor: pointer; }
+    .cq-radio:hover { background: var(--color-accent-100); }
+    [data-badges="minimal"] .sec-badge { display: none; }
+  </style>
+</helmet>
+<div style="min-height:100vh; background:var(--color-bg); color:var(--color-text); font-family:var(--font-body); display:flex; flex-direction:column; {{ themeVarsStyle }}" data-badges="{{ badgeMode }}">
+
+  <div style="display:flex; align-items:center; justify-content:space-between; padding:var(--space-4) var(--space-6); border-bottom:1px solid var(--color-neutral-300);">
+    <div style="display:flex; align-items:center; gap:var(--space-4);">
+      <img src="assets/chcr-logo.png" alt="Community Health Center of Richmond" style="height:36px; width:auto;">
+      <span style="font-family:var(--font-heading); font-size:20px; color:var(--color-text); border-left:1px solid var(--color-neutral-300); padding-left:var(--space-4);">{{ ui.courseTitle }}</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:var(--space-2);">
+      <button type="button" class="btn btn-ghost" onClick="{{ toggleLanguage }}">{{ ui.langToggle }}</button>
+      <button type="button" class="btn btn-ghost" onClick="{{ toggleAdmin }}">{{ adminToggleLabel }}</button>
+    </div>
+  </div>
+
+  <sc-if value="{{ isProgressVisible }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:var(--space-3) var(--space-6); background:var(--color-neutral-100);">
+      <div style="display:flex; justify-content:space-between; font-size:13px; opacity:0.7; margin-bottom:var(--space-1);">
+        <span>{{ stepLabel }}</span>
+        <span>{{ stepPct }}%</span>
+      </div>
+      <div style="height:8px; border-radius:999px; background:var(--color-neutral-300); overflow:hidden;">
+        <div style="height:100%; border-radius:999px; background:var(--color-accent); width:{{ stepPctStyle }};"></div>
+      </div>
+    </div>
+  </sc-if>
+  <main style="flex: 1; display: flex; justify-content: center; padding: var(--space-8) var(--space-4); position: relative">
+    
+  <div style="width:100%; max-width:820px;">
+
+      <sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ true }}">
+        <div data-screen-label="Welcome" class="card elev-md" style="padding:20px; gap:0;">
+          <image-slot id="welcome-hero" shape="rounded" radius="16" fit="contain" placeholder="Drop a CHCR clinic or team photo" style="width:100%; height:220px; background:var(--color-neutral-100); margin-bottom:12px;"></image-slot>
+
+          <div class="card-title" style="font-size:28px; margin-bottom:6px;">{{ ui.courseTitle }}</div>
+          <p class="card-body" style="font-size:14px; margin-bottom:4px;">{{ ui.welcomeIntro1 }}</p>
+          <p class="card-body" style="font-size:14px;">{{ ui.welcomeIntro2Prefix }}{{ passingScoreLabel }}{{ ui.welcomeIntro2Suffix }}</p>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:14px 0;">
+            <div class="card" style="padding:12px; gap:4px;">
+              <div class="card-kicker" style="font-size:14px;">{{ ui.aboutFacilitator }}</div>
+              <p class="card-body" style="font-size:13px;">{{ ui.aboutFacilitatorBody }}<br>{{ ui.aboutFacilitatorRole }}</p>
+              <button type="button" class="btn btn-ghost" style="margin-top:2px; padding-left:0;" onClick="{{ goFacilitatorPage }}">{{ ui.readMore }}</button>
+            </div>
+            <div class="card" style="padding:12px; gap:4px;">
+              <div class="card-kicker" style="font-size:14px;">{{ ui.aboutChcr }}</div>
+              <p class="card-body" style="font-size:13px;">{{ ui.aboutChcrBody }}</p>
+              <button type="button" class="btn btn-ghost" style="margin-top:2px; padding-left:0;" onClick="{{ goAboutChcrPage }}">{{ ui.readMore }}</button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 0 12px;">
+            <div class="field">
+              <label for="cq-name">{{ ui.yourName }}</label>
+              <input class="input" id="cq-name" value="{{ learnerName }}" onChange="{{ onNameChange }}" placeholder="Jane Doe">
+            </div>
+            <div class="field">
+              <label for="cq-email">{{ ui.yourEmail }}</label>
+              <input class="input" id="cq-email" type="email" value="{{ learnerEmail }}" onChange="{{ onEmailChange }}" placeholder="jane.doe@chcrichmond.org">
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" disabled="{{ cannotBegin }}" onClick="{{ beginTraining }}">{{ ui.beginPretest }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </button>
+          <button type="button" class="btn btn-ghost" style="margin-top:8px;" onClick="{{ devSkipToLesson }}">{{ ui.devSkip }}</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isFacilitatorPage }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="About the Facilitator" class="card elev-md" style="padding:20px; gap:0;">
+          <button type="button" class="btn btn-ghost" style="padding-left:0; margin-bottom:8px;" onClick="{{ backToWelcome }}">{{ ui.back }}</button>
+          <div style="display:grid; grid-template-columns:160px 1fr; gap:16px; align-items:start;">
+            <img src="assets/stavros-headshot.jpg" alt="Stavros E. Delardas, LCSW, PMH-C, CLC" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:var(--radius-lg); box-shadow:var(--shadow-sm);">
+            <div>
+              <div class="card-kicker">{{ ui.facilitatorKicker }}</div>
+              <div style="font-family:var(--font-heading); font-size:22px; margin-bottom:2px;">Stavros E. Delardas</div>
+              <div style="opacity:0.75; margin-bottom:6px; font-size:14px;">{{ ui.facilitatorRoleLine }}</div>
+            </div>
+          </div>
+          <p class="card-body" style="margin-top: 12px; font-size: 16px">{{ ui.facilitatorBio1 }}</p>
+          <p class="card-body" style="font-size: 16px; position: relative; top: 10px">{{ ui.facilitatorBio2 }}</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAboutChcrPage }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="About CHCR" class="card elev-md" style="padding:20px; gap:0;">
+          <button type="button" class="btn btn-ghost" style="padding-left:0; margin-bottom:8px;" onClick="{{ backToWelcome }}">{{ ui.back }}</button>
+          <img src="https://chcrichmond.org/wp-content/uploads/2021/12/circle-of-care-collage-graphic.png" alt="CHCR Circle of Care" style="width:100%; height:180px; object-fit:contain; background:var(--color-neutral-100); border-radius:var(--radius-lg); margin-bottom:12px; box-shadow:var(--shadow-sm);">
+          <div class="card-kicker">{{ ui.aboutChcrKicker }}</div>
+          <div style="font-family:var(--font-heading); font-size:24px; margin-bottom:4px;">{{ ui.chcrOrgName }}</div>
+          <div style="opacity:0.75; margin-bottom:8px; font-size:14px;">{{ ui.chcrTagline }}</div>
+          <p class="card-body" style="font-size:14px; margin-bottom:6px;">{{ ui.chcrMission }}</p>
+          
+
+          <div class="card-kicker" style="margin: 12px 0 6px; font-size: 16px">{{ ui.neighborhoodKicker }}</div>
+          <p class="card-body" style="font-size:14px;">{{ ui.neighborhoodBody }}</p>
+
+          <div class="card-kicker" style="margin: 12px 0 6px; font-size: 16px; position: relative; top: 10px">{{ ui.servicesKicker }}</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
+            <div class="card" style="padding: 12px; gap: 4px; position: relative; top: 10px"><div style="width:34px; height:34px; border-radius:999px; background:var(--color-accent-100); color:var(--color-accent-700); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></div><div class="card-title" style="font-size:15px;">{{ ui.svcPrimaryTitle }}</div><p class="card-body" style="font-size:13px;">{{ ui.svcPrimaryBody }}</p></div>
+            <div class="card" style="padding: 12px; gap: 4px; position: relative; top: 10px"><div style="width:34px; height:34px; border-radius:999px; background:var(--color-accent-100); color:var(--color-accent-700); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></div><div class="card-title" style="font-size:15px;">{{ ui.svcPediTitle }}</div><p class="card-body" style="font-size:13px;">{{ ui.svcPediBody }}</p></div>
+            <div class="card" style="padding: 12px; gap: 4px; position: relative; top: 10px"><div style="width:34px; height:34px; border-radius:999px; background:var(--color-accent-2-100); color:var(--color-accent-2-700); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.7-4.35-9.3-8.3C1 10 1.6 6.6 4.4 5 6.6 3.7 9.4 4.3 11 6.3c.4.5.7 1 1 1.5.3-.5.6-1 1-1.5 1.6-2 4.4-2.6 6.6-1.3 2.8 1.6 3.4 5 1.7 7.7C18.7 16.65 12 21 12 21Z"></path></svg></div><div class="card-title" style="font-size:15px;">{{ ui.svcWomensTitle }}</div><p class="card-body" style="font-size:13px;">{{ ui.svcWomensBody }}</p></div>
+            <div class="card" style="padding: 12px; gap: 4px; position: relative; top: 10px"><div style="width:34px; height:34px; border-radius:999px; background:var(--color-accent-100); color:var(--color-accent-700); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path></svg></div><div class="card-title" style="font-size:15px;">{{ ui.svcBehavioralTitle }}</div><p class="card-body" style="font-size:13px;">{{ ui.svcBehavioralBody }}</p></div>
+            <div class="card" style="padding: 12px; gap: 4px; position: relative; top: 10px"><div style="width:34px; height:34px; border-radius:999px; background:var(--color-accent-2-100); color:var(--color-accent-2-700); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v4M16 3v4M4 11h16M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"></path><path d="M9.5 15.5 11 17l3.5-3.5"></path></svg></div><div class="card-title" style="font-size:15px;">{{ ui.svcDentalTitle }}</div><p class="card-body" style="font-size:13px;">{{ ui.svcDentalBody }}</p></div>
+            <div class="card" style="padding: 12px; gap: 4px; position: relative; top: 10px"><div style="width:34px; height:34px; border-radius:999px; background:var(--color-accent-100); color:var(--color-accent-700); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg></div><div class="card-title" style="font-size:15px;">{{ ui.svcNutritionTitle }}</div><p class="card-body" style="font-size:13px;">{{ ui.svcNutritionBody }}</p></div>
+            <div class="card" style="padding: 12px; gap: 4px; position: relative; top: 10px"><div style="width:34px; height:34px; border-radius:999px; background:var(--color-accent-2-100); color:var(--color-accent-2-700); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a7 7 0 0 0 7-7c0-2-1-3.5-2-5-1.5 1-2 2.5-2 2.5S13.5 8 12 4c-1.5 4-3 6.5-3 8.5S9 15 9 15s-1-1.5-2-2.5c-1 1.5-2 3-2 5a7 7 0 0 0 7 7Z"></path></svg></div><div class="card-title" style="font-size:15px;">{{ ui.svcPodiatryTitle }}</div><p class="card-body" style="font-size:13px;">{{ ui.svcPodiatryBody }}</p></div>
+            <div class="card" style="padding: 12px; gap: 4px; position: relative; top: 10px"><div style="width:34px; height:34px; border-radius:999px; background:var(--color-accent-100); color:var(--color-accent-700); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20h5v-1a4 4 0 0 0-4-4h-1M9 20H4v-1a4 4 0 0 1 4-4h1m1-3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7 0a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"></path></svg></div><div class="card-title" style="font-size:15px;">{{ ui.svcSupportTitle }}</div><p class="card-body" style="font-size:13px;">{{ ui.svcSupportBody }}</p></div>
+          </div>
+          <p class="card-body" style="opacity:0.75; font-size:12px;">{{ ui.chcrFooter }} <a href="https://chcrichmond.org" target="_blank" rel="noopener">chcrichmond.org</a>.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isReferencesPage }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="References" class="card elev-md" style="padding:20px; gap:0;">
+          <button type="button" class="btn btn-ghost" style="padding-left:0; margin-bottom:8px;" onClick="{{ backToWelcome }}">{{ ui.back }}</button>
+          <div class="card-kicker">{{ ui.referencesKicker }}</div>
+          <div style="font-family:var(--font-heading); font-size:22px; margin-bottom:8px;">{{ ui.referencesTitle }}</div>
+          <p class="card-body" style="margin-bottom:12px; font-size:14px;">{{ ui.referencesIntro }}</p>
+          <div style="display:grid; gap:8px;">
+            <div class="card" style="padding:12px; gap:4px;">
+              <div class="card-title" style="font-size:15px;">CHCR De-Escalation Quick Reference Guide</div>
+              <p class="card-body" style="font-size:13px;">Stavros E. Delardas's original 5-step (Recognize, Respond, Set Limits, Engage Non-Verbally, Reflect &amp; Learn) infographic, the basis for this course's quick-reference cycle.</p>
+            </div>
+            <div class="card" style="padding:12px; gap:4px;">
+              <div class="card-title" style="font-size:15px;">Community Health Center of Richmond</div>
+              <p class="card-body" style="font-size:13px;">Mission, services, and location information. <a href="https://chcrichmond.org" target="_blank" rel="noopener">chcrichmond.org</a></p>
+            </div>
+            <div class="card" style="padding:12px; gap:4px;">
+              <div class="card-title" style="font-size:15px;">Center of Excellence for Behavioral Health in Nursing Facilities: De-Escalation Strategies In-Service Toolkit</div>
+              <p class="card-body" style="font-size:13px;">SAMHSA-funded toolkit (Aug. 2025) informing the debrief worksheet and discussion of personal readiness. <a href="https://www.cms.gov/files/document/de-escalation-strategies-service-toolkit-final-2025.pdf" target="_blank" rel="noopener">cms.gov</a></p>
+            </div>
+            <div class="card" style="padding:12px; gap:4px;">
+              <div class="card-title" style="font-size:15px;">Crisis Prevention Institute (CPI): Health Care De-Escalation Training</div>
+              <p class="card-body" style="font-size:13px;">Industry best practices on early warning signs, trauma-informed response, and post-crisis debrief. <a href="https://www.crisisprevention.com/industries/health-care/" target="_blank" rel="noopener">crisisprevention.com</a></p>
+            </div>
+          </div>
+          <div class="card-kicker" style="margin:12px 0 6px;">{{ ui.academicKicker }}</div>
+          <div style="display:grid; gap:8px;">
+            <div class="card" style="padding:12px;"><p class="card-body" style="font-size:13px;">Goodman, H., Papastavrou Brooks, C., Price, O., &amp; Barley, E. A. (2020). Barriers and facilitators to the effective de-escalation of conflict behaviours in forensic high-secure settings: A qualitative study. <em>International Journal of Mental Health Systems, 14</em>, Article 59. <a href="https://doi.org/10.1186/s13033-020-00392-5" target="_blank" rel="noopener">doi.org/10.1186/s13033-020-00392-5</a></p></div>
+            <div class="card" style="padding:12px;"><p class="card-body" style="font-size:13px;">Institute for Healthcare Improvement. (2019). <em>Improving Health Equity: Build Infrastructure to Support Health Equity</em> [Guide]. <a href="https://www.ihi.org/resources/Pages/Publications/Improving-Health-Equity-Build-Infrastructure-Guide.aspx" target="_blank" rel="noopener">ihi.org</a></p></div>
+            <div class="card" style="padding:12px;"><p class="card-body" style="font-size:13px;">Price, O., Papastavrou Brooks, C., Johnston, I., et al. (2024). Development and evaluation of a de-escalation training intervention in adult acute and forensic units: The EDITION systematic review and feasibility trial. <em>Health Technology Assessment, 28</em>(03). National Institute for Health and Care Research.</p></div>
+            <div class="card" style="padding:12px;"><p class="card-body" style="font-size:13px;">Substance Abuse and Mental Health Services Administration. (2014). <em>Trauma-Informed Care in Behavioral Health Services: Treatment Improvement Protocol (TIP) Series 57</em> (HHS Publication No. SMA 13-4801). U.S. Department of Health and Human Services.</p></div>
+            <div class="card" style="padding:12px;"><p class="card-body" style="font-size:13px;">Tervalon, M., &amp; Murray-García, J. (1998). Cultural humility versus cultural competence: A critical distinction in defining physician training outcomes in multicultural education. <em>Journal of Health Care for the Poor and Underserved, 9</em>(2), 117-125.</p></div>
+            <div class="card" style="padding:12px;"><p class="card-body" style="font-size:13px;">Trauma Interventions Research Center. (2020, May 15). <em>Calming &amp; de-escalation strategies</em> [Video]. YouTube. <a href="https://youtu.be/R2PSExM-NhU" target="_blank" rel="noopener">youtu.be/R2PSExM-NhU</a></p></div>
+            <div class="card" style="padding:12px;"><p class="card-body" style="font-size:13px;">Yeager, K. A., &amp; Bauer-Wu, S. (2013). Cultural humility: Essential foundation for clinical researchers. <em>Applied Nursing Research, 26</em>(4), 251-256. <a href="https://doi.org/10.1016/j.apnr.2013.06.008" target="_blank" rel="noopener">doi.org/10.1016/j.apnr.2013.06.008</a></p></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isPretest }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Pre-Test" style="margin-bottom:var(--space-6);">
+          <div class="card-kicker">{{ ui.beforeBegin }}</div>
+          <div style="font-family:var(--font-heading); font-size:26px; margin-bottom:var(--space-2);">{{ ui.pretestTitle }}</div>
+          <p style="opacity:0.75; max-width:60ch;">{{ ui.pretestIntro }}</p>
+        </div>
+        <div style="display:grid; gap:var(--space-4);">
+          <sc-for list="{{ pretestView }}" as="q" hint-placeholder-count="10">
+            <div class="card">
+              <div class="card-kicker">{{ ui.questionOf }} {{ q.num }} {{ ui.of10 }}</div>
+              <div class="card-title" style="font-size:18px;">{{ q.text }}</div>
+              <div style="display:grid; gap:var(--space-2); margin-top:var(--space-3);">
+                <sc-for list="{{ q.options }}" as="opt" hint-placeholder-count="4">
+                  <label class="radio cq-radio">
+                    <input type="radio" name="pre-{{ q.num }}" checked="{{ opt.selected }}" onChange="{{ opt.onSelect }}">
+                    <span class="dot"></span>{{ opt.text }}
+                  </label>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="margin-top:var(--space-6);">
+          <button type="button" class="btn btn-primary btn-block" disabled="{{ pretestIncomplete }}" onClick="{{ submitPretest }}">{{ ui.submitPretest }}</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isLesson }}" hint-placeholder-val="{{ false }}">
+        <sc-if value="{{ isSection0 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 0" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">1</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 1 {{ ofWord }} 21</div>
+              <h1 style="font-family:var(--font-heading); font-size:28px; color:var(--color-accent-900); margin:0;">Why De-Escalation Matters</h1>
+            </div>
+          </div>
+          <p style="max-width:65ch; margin-bottom:var(--space-3); font-size:17px; line-height:1.65; color:var(--color-accent-900);">De-escalation is a set of strategies used to reduce the intensity of conflict, agitation, or distress, to create safety, restore calm, and prevent harm, without the need for physical intervention.</p>
+          <p style="max-width:65ch; margin-bottom:var(--space-6); font-size:17px; line-height:1.65; color:var(--color-accent-900);">It's especially important in healthcare, where patients may be vulnerable, scared, or in crisis.</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:var(--space-4);">
+            <div style="background:#fff; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.05); padding:20px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--space-2);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-900)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path></svg>
+              <div class="card-kicker" style="color:var(--color-accent-900);">Protects</div>
+              <p style="margin:0; font-size:16px; line-height:1.5; color:var(--color-accent-900);">The safety of patients, staff, and visitors.</p>
+            </div>
+            <div style="background:#fff; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.05); padding:20px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--space-2);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-900)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"></path><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"></path><path d="m21 3 1 11h-2"></path><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"></path><path d="M3 4h8"></path></svg>
+              <div class="card-kicker" style="color:var(--color-accent-900);">Preserves</div>
+              <p style="margin:0; font-size:16px; line-height:1.5; color:var(--color-accent-900);">The dignity of individuals experiencing stress, confusion, or agitation.</p>
+            </div>
+            <div style="background:#fff; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.05); padding:20px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--space-2);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-900)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"></path><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"></path><path d="m2 15 6 6"></path><path d="M19.8 17.8a2 2 0 0 0 3.4-1.4V9a2 2 0 0 0-2-2h-5.8"></path></svg>
+              <div class="card-kicker" style="color:var(--color-accent-900);">Supports</div>
+              <p style="margin:0; font-size:16px; line-height:1.5; color:var(--color-accent-900);">Therapeutic relationships by showing empathy and respect.</p>
+            </div>
+            <div style="background:#fff; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.05); padding:20px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--space-2);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-900)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="m9 14 2 2 4-4"></path></svg>
+              <div class="card-kicker" style="color:var(--color-accent-900);">Meets</div>
+              <p style="margin:0; font-size:16px; line-height:1.5; color:var(--color-accent-900);">Compliance &amp; best-practice standards (CMS, OSHA, Joint Commission, etc.)</p>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSection1 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 1" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">2</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 2 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Before We Respond: Bias, Privilege &amp; Power</div>
+            </div>
+          </div>
+          <image-slot id="bias-image" shape="rounded" radius="16" placeholder="Drop a photo of a staff-patient conversation" style="width:100%; height:320px; margin-bottom:var(--space-5);"></image-slot>
+          <p style="max-width: 100ch; margin-bottom: var(--space-5); margin-top: 15px; font-size: 16px">Before diving into techniques, it's important to understand the dynamics we may not be consciously considering, dynamics that shape how we approach situations, perceive others, and the assumptions we carry.</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="card" style="position: relative; top: 15px"><div style="width:36px; height:36px; border-radius:999px; background:var(--color-accent-100); color:var(--color-accent-700); display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); margin-bottom:var(--space-2);">1</div><div class="card-title" style="font-size:18px;">Internal Bias</div><p class="card-body" style="font-size: 16px">Automatic thoughts, stereotypes, or assumptions we may hold about others, even when we consciously believe in fairness. Cultural humility asks us to continually examine our own position and acknowledge how power, privilege, and prejudice might affect our perceptions and responses, especially during conflict.</p></div>
+            <div class="card" style="position: relative; top: 15px"><div style="width:36px; height:36px; border-radius:999px; background:var(--color-accent-2-100); color:var(--color-accent-2-700); display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); margin-bottom:var(--space-2);">2</div><div class="card-title" style="font-size:18px;">Systemic Influence</div><p class="card-body" style="font-size: 16px">Not every reaction is about this moment alone. Many people carry experiences shaped by racism, homophobia, sexism, ableism, or classism that affect how safe or respected they feel in healthcare settings. Someone who has faced past discrimination may approach staff with mistrust or fear, an echo of past harm, not necessarily this interaction. Responding with empathy rather than judgment helps rebuild trust.</p></div>
+          </div>
+          <div class="card" style="margin-bottom: var(--space-6); position: relative; top: 15px"><div style="width:36px; height:36px; border-radius:999px; background:var(--color-accent-100); color:var(--color-accent-700); display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); margin-bottom:var(--space-2);">3</div><div class="card-title" style="font-size:18px;">Power Dynamics</div><p class="card-body" style="font-size: 16px">Authority, influence, and control naturally differ by role, knowledge, and access to resources, some structure is necessary for safety and care. But when power is unbalanced or used without awareness, it can create tension, fear, or resistance in someone who already feels vulnerable. Recognizing how your position, tone, and actions shape another person's sense of control helps you reduce defensiveness and build collaboration. Physical presence is part of this too, being taller, larger, or standing over someone can unintentionally read as intimidating, regardless of intent; and in some interactions, who responds (for example, matching staff gender to a patient's comfort level) can itself lower tension.</p></div>
+        </sc-if>
+
+        <sc-if value="{{ isSection2 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 2" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">3</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 3 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Cultural Humility</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; font-size: 16px; line-height: 1.6; margin-bottom: var(--space-2)">Every patient brings their own background, language, and history with the healthcare system into the room. Those factors shape how they express pain, fear, or frustration, and how safe they feel speaking up.<br></p>
+          
+          <div class="card" style="margin-bottom: var(--space-4); margin-top: 20px">
+            <div class="card-title" style="font-size:22px;">Cultural humility isn't about knowing all cultures.</div>
+            <p class="card-body" style="font-size:16px;">It's about knowing you have blind spots, and choosing to stay open, curious, and respectful when someone's experience doesn't match your own.</p>
+          </div><p style="max-width: 100ch; font-size: 16px; line-height: 1.6">Practicing cultural humility means checking your own assumptions before reacting to someone else's behavior. A response that feels "difficult" to you may simply reflect a different way of communicating distress.</p>
+        </sc-if>
+
+        <sc-if value="{{ isSection2b }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 2b" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">4</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 4 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Not the Same as Cultural Competence</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; font-size: 16px; margin-bottom: var(--space-5); width: 820px; height: 57px; position: relative; top: 0px">Cultural humility is not about mastering facts about every culture you might encounter; that's an impossible, moving target. It's not just about being "culturally competent," but about remaining teachable and respectful.</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); margin-bottom:var(--space-6);">
+            
+            <div class="card" style="z-index: 1; position: relative; top: 15px"><div class="card-title" style="font-size: 18px; text-align: center">Cultural Competence</div><p class="card-body" style="font-size:15px;">Treated as a checklist of facts to learn about other groups, implying an endpoint you can reach and "know."</p></div><div class="card" style="position: relative; top: 15px"><div class="card-title" style="font-size: 18px; text-align: center">Cultural Humility</div><p class="card-body" style="font-size:15px;">An ongoing practice of self-evaluation and self-critique, staying curious about what you don't know, especially about your own biases.</p></div>
+          </div>
+          <p style="max-width: 100ch; font-size: 16px; line-height: 1.6">This distinction matters most in the moment, not just in training. In a tense interaction, reaching for a memorized fact about someone's background can lead to stereotyping. Staying humble means asking, listening, and adjusting instead.</p>
+        </sc-if>
+
+        <sc-if value="{{ isSection2c }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 2c" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">5</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 5 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Cultural Humility in Practice</div>
+            </div>
+          </div>
+          <div class="card-kicker" style="margin-bottom:var(--space-2); font-size:15px;">Putting it into practice</div>
+          <ul style="margin:0 0 var(--space-5); padding-left:var(--space-5); display:grid; gap:var(--space-2); font-size:16px;">
+            <li>Avoid assumptions about how a patient "should" behave, cultural expressions of distress vary.</li>
+            <li>Ask instead of assume: "Is there a way I can explain this better for you?" or "Would you prefer a different language or interpreter?"</li>
+            <li>Be aware of power and identity; patients from marginalized communities may escalate faster if they feel ignored, judged, or dismissed based on past experience.</li>
+            <li>Normalize emotion without labeling behavior as "aggressive" based only on tone or volume.</li>
+          </ul>
+          <div class="card" style="margin-bottom: var(--space-6); background: var(--color-accent-2-100); margin-top: 30px"><div class="card-kicker" style="font-size: 16px">In practice</div><p class="card-body" style="font-size: 16px">A patient communicates in a way that feels unusually indirect or formal to you. Assuming they're being evasive shuts down trust. Recognizing this may simply be how they communicate and adjusting your approach with patience keeps the door open.</p></div>
+        </sc-if>
+
+        <sc-if value="{{ isSection3 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 3" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">6</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 6 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Common Triggers: Circumstances</div>
+            </div>
+          </div>
+          <image-slot id="triggers-image" shape="rounded" radius="16" placeholder="Drop a waiting-room photo" style="width:100%; height:320px; margin-bottom:var(--space-5);"></image-slot>
+          <p style="max-width: 100ch; margin-bottom: var(--space-5); position: relative; top: 15px">We may never know exactly why someone is reacting the way they are. Recognizing common triggers helps us move toward a solutions-based approach rather than a defensive one. Some triggers come from the circumstances of the visit itself.</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-6); position: relative; top: 35px">
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-title" style="font-size:16px;">Long wait times</div><p class="card-body" style="font-size: 14px">Not being seen on time, others called ahead (perceived), no clear communication about the wait.</p></div>
+            <div class="card" style="background:var(--color-accent-2-100);"><div class="card-title" style="font-size:16px;">Communication breakdowns</div><p class="card-body" style="font-size: 14px">Conflicting instructions, medical jargon, staff appearing rushed or dismissive, discussing patients in public spaces.</p></div>
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-title" style="font-size:16px;">Billing &amp; insurance issues</div><p class="card-body" style="font-size: 14px">Surprise costs, denials, and frustration with payment processes.</p></div>
+            <div class="card" style="background:var(--color-accent-2-100);"><div class="card-title" style="font-size:16px;">Perceived rudeness or judgment</div><p class="card-body" style="font-size: 14px">Short responses, lack of eye contact, being asked to repeat themselves, being "corrected," tone and body language.</p></div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSection4 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 4" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">7</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 7 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Common Triggers: Inner State</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; margin-bottom: var(--space-5); font-size: 16px">Triggers can come from many places, not just externally. What a person is carrying internally, like fear, pain, or a condition that changes how they process the moment can impact how someone perceives and interacts with the their environment.</p>
+          <div style="display: grid; gap: var(--space-3); margin-bottom: var(--space-6); position: relative; top: 20px">
+            <div style="display:flex; gap:var(--space-4); align-items:flex-start; padding:var(--space-4); background:var(--color-accent-100); border-radius:var(--radius-lg);">
+              <div style="width:40px; height:40px; border-radius:999px; background:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"></path><path d="M12 6v6l4 2"></path></svg></div>
+              <div><div class="card-title" style="font-size: 18px">Fear, pain, or anxiety</div><p class="card-body" style="font-size: 16px">Fear of diagnosis or treatment, physical discomfort, fear of being ignored, forgotten, or judged.</p></div>
+            </div>
+            <div style="display:flex; gap:var(--space-4); align-items:flex-start; padding:var(--space-4); background:var(--color-accent-2-100); border-radius:var(--radius-lg);">
+              <div style="width:40px; height:40px; border-radius:999px; background:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-2-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12h6"></path></svg></div>
+              <div><div class="card-title" style="font-size: 18px">Perceived lack of control</div><p class="card-body" style="font-size: 16px">Being told what to do with no reason, no options offered, feeling talked down to, receiving negative news.</p></div>
+            </div>
+            <div style="display:flex; gap:var(--space-4); align-items:flex-start; padding:var(--space-4); background:var(--color-accent-100); border-radius:var(--radius-lg);">
+              <div style="width:40px; height:40px; border-radius:999px; background:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"></path></svg></div>
+              <div><div class="card-title" style="font-size: 18px">Behavioral health / substance use</div><p class="card-body" style="font-size: 16px">Withdrawal symptoms, hallucinations or delusions, executive-functioning difficulty (e.g., waiting), feeling misunderstood.</p></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSection5 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 5" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">8</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 8 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Early Warning Signs</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; margin-bottom: var(--space-5); font-size: 16px">Spotting these signs early is one of the best ways to address a situation before it escalates further. Everyone shows signs of how they're feeling, whether they notice it or not.</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-6); position: relative; top: 20px">
+            <div class="card" style="background: var(--color-accent-100); align-items: center"><div class="card-title" style="font-size: 18px">Verbal indicators</div><p class="card-body" style="font-size: 16px; text-align: center">Changes in tone (more direct, curt, or louder) passive or aggressive remarks, sarcasm.</p></div>
+            <div class="card" style="background: var(--color-accent-2-100); text-align: center"><div class="card-title" style="font-size: 18px">Non-verbal behaviors</div><p class="card-body" style="font-size: 16px">Fidgeting, restlessness, clenched fists, pacing, stiff posture, deep sighs, tapping hands or feet.</p></div>
+            <div class="card" style="background: var(--color-accent-100); text-align: center"><div class="card-title" style="font-size: 18px; text-align: center">Facial expressions</div><p class="card-body" style="font-size: 16px">Eye rolling, narrowed eyes, grinding teeth, a forced or insincere smile, flushed face, pursed lips.</p></div>
+            <div class="card" style="background: var(--color-accent-2-100); text-align: center"><div class="card-title" style="font-size: 18px">Emotional indicators</div><p class="card-body" style="font-size: 16px">Irritability, impatience, visible frustration, verbal cues like "you're not listening."</p></div><div class="card" style="background: var(--color-accent-100); justify-content: flex-start; align-items: center; position: relative; left: 200px"><div class="card-title" style="font-size: 18px">Boundary testing</div><p class="card-body" style="font-size: 16px; text-align: center">Interrupting staff, questioning rules repeatedly, pushing back subtly or aggressively.</p></div>
+            
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSection6 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 6" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">9</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 9 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Unintentional Escalation</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; margin-bottom: var(--space-5); font-size: 16px">We can escalate a situation without meaning to, usually when we're not mindful of how we deliver information, verbally or non-verbally.</p>
+          <div style="display: grid; gap: var(--space-4); margin-bottom: var(--space-6); margin-top: 20px">
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-title" style="font-size: 18px">Tone &amp; dismissiveness</div><p class="card-body" style="font-size: 16px">A sharp, rushed tone ("What's the problem now?"); minimizing language ("It's not that bad," "we already explained this"); rapid-fire jargon with no translation.</p></div>
+            <div class="card" style="background:var(--color-accent-2-100);"><div class="card-title" style="font-size: 18px">Talking about the patient, not to them</div><p class="card-body" style="font-size: 16px">Labels like "non-compliant" or "dramatic" said within earshot, or arguing over small details ("it wasn't three hours, it was two") can feel invalidating.</p></div>
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-title" style="font-size: 18px">Body language</div><p class="card-body" style="font-size: 16px">Standing over someone, crossed arms, lack of eye contact or turning your back, sighing or checking the clock, moving too close without consent.</p></div>
+            <div class="card" style="background:var(--color-accent-2-100);"><div class="card-title" style="font-size: 18px">Control, rules &amp; boundaries</div><p class="card-body" style="font-size: 16px">Quoting policy before acknowledging feelings, sudden changes with no preparation, or casual threats ("I'll have to call security").</p></div>
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-title" style="font-size: 18px">Documentation &amp; side conversations</div><p class="card-body" style="font-size: 16px">Charting language a patient may later read, venting at the nurses' station within earshot, promising a follow-up and not returning, or inconsistent limits between staff.</p></div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSection7 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 7" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent-2); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">10</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 10 {{ ofWord }} 21 · {{ coreSkillWord }} 1</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Stay Calm &amp; Controlled</div>
+            </div>
+          </div>
+          <image-slot id="calm-image" shape="rounded" radius="16" placeholder="Drop a photo of a calm staff interaction" style="width:100%; height:320px; margin-bottom:var(--space-5);"></image-slot>
+          <p style="max-width: 100ch; margin-bottom: var(--space-2); position: relative; top: 16px; font-size: 16px">You can't control someone else's behavior, but you can control yours, and the energy you bring into the room. Calm isn't passive; it's power with purpose. In a crisis, the other person's brain may be in fight, flight, or freeze mode; your calm presence signals they don't need to stay there.</p>
+          <div class="card-kicker" style="margin: var(--space-4) 0 var(--space-2); font-size: 18px">How to do it</div>
+          <ul style="margin: 0 0 var(--space-6); padding-left: var(--space-5); display: grid; gap: 10px">
+            <li style="font-size: 16px"><strong>Breathe intentionally</strong>, slow, steady breaths regulate your own body before you address others.</li>
+            <li style="font-size: 16px"><strong>Lower your tone &amp; volume</strong>, speaking slowly and softly reduces the chance someone feels threatened. Silence can give the other person room to think.</li>
+            <li style="font-size: 16px"><strong>Keep a neutral posture</strong>, hands visible and relaxed, arms uncrossed, a safe distance kept.</li>
+            <li style="font-size: 16px"><strong>Name your own cues</strong>, notice a tight jaw or racing thoughts and reset in the moment.</li>
+            <li style="font-size: 16px"><strong>Do a 3-count</strong>, it gives you a moment to choose your response instead of reacting.</li>
+          </ul>
+        </sc-if>
+
+        <sc-if value="{{ isSection8 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 8" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent-2); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">11</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 11 {{ ofWord }} 21 · {{ coreSkillWord }} 2</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Show Respect &amp; Empathy</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; margin-bottom: var(--space-2); font-size: 16px">When tension is high, people often feel unheard or dismissed; that's where empathy makes the biggest impact. Showing empathy doesn't mean agreeing with someone's behavior; it means recognizing their emotion in the moment.</p>
+          <div class="card-kicker" style="margin: var(--space-4) 0 var(--space-2); font-size: 18px">How to do it</div>
+          <ul style="margin:0 0 var(--space-5); padding-left:var(--space-5); display:grid; gap:var(--space-2);">
+            <li style="font-size: 16px"><strong>Treat every person with dignity</strong>, regardless of their behavior use their name, a polite tone, and give personal space.</li>
+            <li style="font-size: 16px"><strong style="font-size: 16px">Listen to understand, not to respond</strong>, look for the emotion driving the behavior: fear, frustration, or powerlessness.</li>
+            <li style="font-size: 16px"><strong>Acknowledge feelings before addressing actions</strong>, instead of "You need to calm down," try "I can see this is really upsetting, let's figure out how to make this better."</li>
+            <li style="font-size: 16px"><strong style="font-size: 16px">Use validating language</strong>, "I can see this is really upsetting for you" lowers defensiveness without requiring agreement.</li>
+            <li style="font-size: 16px"><strong>Respect personal space, culture, and autonomy</strong>, being mindful of someone's history shows cultural humility and helps prevent re-traumatization.</li>
+          </ul>
+          <div class="card" style="margin-bottom: var(--space-6); background: var(--color-accent-2-100); position: relative; top: 20px"><div class="card-kicker" style="font-size: 18px">In practice</div><p class="card-body" style="font-size: 16px">A patient snaps, "You people never explain anything." Reacting with, "That's not fair, I'm right in the middle of it" argues the point instead of the feeling. Try instead: "You're right that this hasn't been explained well, let me slow down and walk through it with you." Empathy doesn't concede the facts; it concedes the frustration is real.</p></div>
+        </sc-if>
+
+        <sc-if value="{{ isSection9 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 9" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent-2); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">12</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 12 {{ ofWord }} 21 · {{ coreSkillWord }} 3</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Use Simple &amp; Clear Communication</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; margin-bottom: var(--space-2); font-size: 16px">When someone is escalated, their ability to process information drops; even people who are usually calm and articulate can struggle with complex details. Clarity becomes a de-escalation tool.</p>
+          <div class="card-kicker" style="margin: var(--space-4) 0 var(--space-2); font-size: 18px">How to do it</div>
+          <ul style="margin:0 0 var(--space-6); padding-left:var(--space-5); display:grid; gap:var(--space-2);">
+            <li style="font-size: 16px"><strong>Use short, simple sentences</strong>, instead of "I need you to sit down so we can take your vitals and get your medication ready," try "Let's start by sitting down together."</li>
+            <li style="font-size: 16px"><strong>Avoid medical jargon</strong>, words like "triage" or "compliance" can sound confusing or intimidating. Plain language builds trust.</li>
+            <li style="font-size: 16px"><strong style="font-size: 16px">Give one instruction at a time</strong>, this reduces overwhelm and gives the person a sense of control.</li>
+            <li style="font-size: 16px"><strong>Check for understanding</strong>, a quick "Does that make sense so far?" catches confusion before it turns into frustration.</li>
+            <li style="font-size: 16px"><strong>Slow your pace, not just your words</strong>, rushed delivery can undercut even the simplest sentence.</li>
+          </ul>
+          <div class="card" style="margin-bottom:var(--space-6); background:var(--color-accent-2-100);"><div class="card-kicker" style="font-size: 18px">In practice</div><p class="card-body" style="font-size: 16px">Instead of "Your labs are pending so we can't finalize discharge until the attending reviews and signs off," try: "We're waiting on one more result. Once it's back, the doctor signs off and you're free to go." Same information, far less to process under stress.</p></div>
+        </sc-if>
+
+        <sc-if value="{{ isSection10 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 10" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent-2); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">13</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 13 {{ ofWord }} 21 · {{ coreSkillWord }} 4</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Maintain a Safe Space</div>
+            </div>
+          </div>
+          <image-slot id="space-image" shape="rounded" radius="16" placeholder="Drop a photo of an open exam room" style="width:100%; height:320px; margin-bottom:var(--space-5);"></image-slot>
+          <p style="max-width: 100ch; margin-bottom: var(--space-2); position: relative; top: 15px; font-size: 16px">Physical space communicates as much as words. When someone feels cornered or physically overpowered, their brain shifts into survival mode. Our goal is to reduce that sense of threat.</p>
+          <div class="card-kicker" style="margin: var(--space-4) 0 var(--space-2); font-size: 18px">How to do it</div>
+          <ul style="margin:0; padding-left:var(--space-5); display:grid; gap:var(--space-2);">
+            <li style="font-size: 16px"><strong>Respect personal space</strong>, keep roughly two arm's lengths of distance when possible.</li>
+            <li style="font-size: 16px"><strong>Keep exits visible and accessible</strong>, people feel safer, and are less likely to escalate, when they know they have a way out.</li>
+            <li style="font-size: 16px"><strong>Avoid standing over or cornering someone</strong>, lower yourself slightly to eye level to reduce the power imbalance.</li>
+          </ul>
+          <p style="max-width: 65ch; margin-top: var(--space-4); opacity: 0.85; font-size: 16px; text-align: center"><b style="position: relative; left: 50px; font-style: italic">Safety is mutual, when the other person feels physically safe, you are safer too.</b></p>
+        </sc-if>
+
+        <sc-if value="{{ isSection11 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 11" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent-2); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">14</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 14 {{ ofWord }} 21 · {{ coreSkillWord }} 5</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Offer Choices, if Possible</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; margin-bottom: var(--space-2); font-size: 16px; position: relative">When someone is agitated, they've often lost a sense of control. Offering choices, even small ones, helps restore their autonomy.</p>
+          <div class="card-kicker" style="margin: var(--space-4) 0 var(--space-2); font-size: 18px">How to do it</div>
+          <ul style="margin:0 0 var(--space-6); padding-left:var(--space-5); display:grid; gap:var(--space-2);">
+            <li style="font-size: 16px"><strong>Frame requests as options</strong>, instead of "You need to sit down," try "Would you like to sit here or by the window?" The task stays the same; the tone shifts to collaboration.</li>
+            <li style="font-size: 16px"><strong>Allow the person to say "no" when it's safe to do so</strong>, this reduces their need to resist and lowers anxiety and defensiveness.</li>
+            <li style="font-size: 16px"><strong style="font-size: 16px">Reinforce autonomy while keeping clear boundaries</strong>, "We can't continue while voices are raised, but we can step outside or take a short break, which would you prefer?"</li>
+            <li style="font-size: 16px"><strong>Keep choices real</strong>, only offer options you can actually honor; a hollow choice erodes trust faster than no choice at all.</li>
+          </ul>
+          <div class="card" style="margin-bottom:var(--space-6); background:var(--color-accent-2-100);"><div class="card-kicker" style="font-size: 18px">In practice</div><p class="card-body" style="font-size: 16px">A patient refuses a blood draw. Rather than "We need this before you can be seen," try: "We do need a sample to move forward, would you rather we draw from this arm, or would sitting help more than lying down?" The requirement stays; how it happens is theirs to shape.</p></div>
+        </sc-if>
+
+        <sc-if value="{{ isSection12 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 12" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent-2); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">15</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 15 {{ ofWord }} 21 · {{ coreSkillWord }} 6</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Non-Verbal Awareness</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; margin-bottom: var(--space-2); font-size: 16px">Body language often communicates more than words. People in distress are hyper-aware of non-verbal cues, so how we carry ourselves can calm or escalate a situation just as much as what we say.</p>
+          <div class="card-kicker" style="margin: var(--space-4) 0 var(--space-2); font-size: 18px">How to do it</div>
+          <ul style="margin:0 0 var(--space-6); padding-left:var(--space-5); display:grid; gap:var(--space-2);">
+            <li style="font-size: 16px"><strong>Open posture</strong>, hands visible, arms uncrossed; slow, deliberate movements read as calm rather than rushed or aggressive.</li>
+            <li style="font-size: 16px"><strong>Balanced eye contact</strong>, brief and respectful; too little seems dismissive, too much can feel confrontational.</li>
+            <li style="font-size: 16px"><strong>Watch your own cues</strong>, sighing, eye-rolling, or checking your watch can signal impatience or disrespect, even unintentionally.</li>
+            <li><strong style="font-size: 16px">Match energy down, not up</strong>, a lowered voice and relaxed shoulders invite the other person to mirror you rather than escalate further.</li>
+          </ul>
+          <div class="card" style="margin-bottom:var(--space-6); background:var(--color-accent-2-100);"><div class="card-kicker" style="font-size: 18px">In practice</div><p class="card-body" style="font-size: 16px">You're rushing between rooms and arrive short of breath, arms full. Before speaking, pause at the door for one breath and let your shoulders drop; patients read your entrance before they hear a word you say.</p></div>
+        </sc-if>
+
+        <sc-if value="{{ isSection13 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 13" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">16</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 16 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Safety &amp; Boundaries</div>
+            </div>
+          </div>
+          <image-slot id="safety-image" shape="rounded" radius="16" placeholder="Drop a photo related to workplace safety" style="width:100%; height:320px; margin-bottom:var(--space-5);"></image-slot>
+          <p style="max-width: 100ch; margin-bottom: var(--space-5); font-size: 16px; position: relative; top: 15px">Safety is the foundation of de-escalation, for both staff and the individual in distress. De-escalation isn't about forcing calm, it's about guiding it, only when it's safe to do so. Our goal is to reduce risk, not to win an argument.</p>
+          <div style="display: grid; gap: var(--space-4); margin-bottom: var(--space-6); position: relative; top: 30px; flex-wrap: nowrap">
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-title" style="font-size: 18px">Know when to disengage</div><p class="card-body" style="font-size: 16px">If behavior becomes threatening, yelling aggressively, physical threats, closing distance unsafely, it's appropriate to step back. Calmly explain you'll return once everyone can communicate safely.</p></div>
+            <div class="card" style="background:var(--color-accent-2-100);"><div class="card-title" style="font-size: 18px">Follow safety protocols</div><p class="card-body" style="font-size: 16px">Always follow your organization's protocols: activating an alert system, calling a supervisor, or using a team response.</p></div>
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-title" style="font-size: 18px">Maintain environmental awareness</div><p class="card-body" style="font-size: 16px">Know your exits, keep a clear path to the door, and avoid corners or getting boxed in behind desks.</p></div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSection13b }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 13b" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">17</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 17 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Safety &amp; Boundaries: Team &amp; Limits</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; margin-bottom: var(--space-5); font-size: 16px">Safety also depends on the team around you, and on limits that protect everyone without shutting the conversation down.</p>
+          <div style="display: grid; gap: var(--space-4); margin-bottom: var(--space-6);">
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-title" style="font-size: 18px">Use team communication</div><p class="card-body" style="font-size: 16px">Use code phrases to alert coworkers when you sense tension building, de-escalation works best as a team process.</p></div>
+            <div class="card" style="background:var(--color-accent-2-100);"><div class="card-title" style="font-size: 18px">Set firm, respectful limits</div><p class="card-body" style="font-size: 16px">Boundaries don't shut people down, they make space safe enough for real connection. "I want to continue this conversation, but I can't do that while voices are raised."</p></div>
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-title" style="font-size: 18px">Involve law enforcement only as a last resort</div><p class="card-body" style="font-size: 16px">Reserved for when safety truly can't be maintained. Debrief with your team afterward, and continue to treat the individual with dignity, even during a crisis response.</p></div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSection14 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 14" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">18</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 18 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">After the Crisis: Debrief &amp; Document</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; margin-bottom: var(--space-5); font-size: 16px">A crisis doesn't end the moment behavior calms down. What happens in the minutes and days after shapes whether the next interaction for you, your team, and the patient is safer.</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); margin-bottom:var(--space-6);">
+            <div class="card" style="background: var(--color-accent-100); position: relative; top: 15px"><div class="card-title" style="font-size: 18px; text-align: center">Debrief as a team</div><p class="card-body" style="font-size: 16px; text-align: center">Talk through what happened while it's fresh: what worked, what didn't, and what you'd try differently next time. This isn't blame; it's how teams get better together.</p></div>
+            <div class="card" style="background: var(--color-accent-2-100); position: relative; top: 15px"><div class="card-title" style="font-size: 18px; text-align: center">Document thoroughly</div><p class="card-body" style="font-size: 16px; text-align: center">Factual, detailed notes: what was observed, what was said and done, and the outcome.&nbsp;</p></div><div class="card" style="background: var(--color-accent-100); position: relative; top: 15px; text-align: center; left: 200px"><div class="card-title" style="font-size: 18px">Report through the proper channel</div><p class="card-body" style="font-size: 16px; text-align: center">Reporting incidents (even ones that didn't require security or law enforcement) helps CHCR track patterns and catch emerging risks early.</p></div>
+            
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSection15 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 15" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">19</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 19 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">After the Crisis: Support &amp; Reconnect</div>
+            </div>
+          </div>
+          <p style="max-width: 65ch; margin-bottom: var(--space-5); font-size: 16px">Recovery isn't only paperwork, it's people, too.</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); margin-bottom:var(--space-6);">
+            <div class="card" style="background: var(--color-accent-100); position: relative; top: 15px"><div class="card-title" style="font-size: 18px">Support each other</div><p class="card-body" style="font-size: 16px">A tense encounter can take an emotional toll even when nothing "bad" happened. Lean on your team, your supervisor, or your Employee Assistance Program.</p></div>
+            <div class="card" style="background: var(--color-accent-2-100); position: relative; top: 15px"><div class="card-title" style="font-size: 18px">Reconnect when it's safe to</div><p class="card-body" style="font-size: 16px">Where appropriate, revisit the relationship with the patient. Most people don't want to be defined by their hardest moment, and a respectful follow-up rebuilds trust.</p></div>
+          </div>
+          
+          <p style="max-width: 100ch; margin-bottom: var(--space-4); opacity: 0.85; font-size: 16px">After any tense encounter, walk through these four questions with your team, alone, or out loud.</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3);">
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-kicker" style="font-size: 18px">1. What happened?</div><p class="card-body" style="font-size: 16px">Just the facts: what led up to it, and what occurred.</p></div>
+            <div class="card" style="background:var(--color-accent-2-100);"><div class="card-kicker" style="font-size: 18px">2. What went well?</div><p class="card-body" style="font-size: 16px">Name what you or your team did that helped.</p></div>
+            <div class="card" style="background:var(--color-accent-2-100);"><div class="card-kicker" style="font-size: 18px">3. What would we improve?</div><p class="card-body" style="font-size: 16px">What would you try differently next time?</p></div>
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-kicker" style="font-size: 18px">4. What did we learn?</div><p class="card-body" style="font-size: 16px">What does this tell you about this patient, or about your own practice?</p></div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSection16 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 16" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">20</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 20 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Key Takeaways</div>
+            </div>
+          </div>
+          <p style="max-width: 100ch; margin-bottom: var(--space-4); font-size: 16px">This isn't about control; it's about making connections. The way we show up often determines how safe and supported someone feels. Every person we encounter carries their own story; de-escalation is about responding with professionalism, empathy, and calm, not about fixing someone.</p>
+          <ul style="margin:0 0 var(--space-6); padding-left:var(--space-5); display:grid; gap:var(--space-2);">
+            <li style="font-size: 16px">Staying calm and respectful helps stabilize the situation.</li>
+            <li style="font-size: 16px">Validating and listening helps people feel seen.</li>
+            <li style="font-size: 16px">Clear boundaries and safety protect everyone involved.</li>
+            <li style="font-size: 16px">De-escalation takes practice, it's okay not to get it perfect. What matters is your awareness and effort to keep learning.</li>
+            <li style="font-size: 16px">Successful de-escalation preserves dignity, theirs and yours, and helps every interaction end a little safer and a little more human.</li>
+          </ul>
+          <div style="text-align:center; padding:var(--space-6); background:var(--color-accent-2-100); border-radius:var(--radius-lg);"><p class="card-body" style="font-style:italic; font-size:20px; font-family:var(--font-heading); font-weight:400; color:var(--color-accent-2-700); margin:0;">"De-escalation begins where judgment ends when we choose to connect instead of control."</p></div>
+        </sc-if>
+
+        <sc-if value="{{ isSection17 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Section 17" style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
+            <div class="sec-badge" style="width:48px; height:48px; border-radius:var(--badge-radius,999px); background:var(--color-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:20px; flex-shrink:0; box-shadow:var(--shadow-sm);">21</div>
+            <div>
+              <div class="card-kicker" style="margin-bottom:2px;">{{ sectionWord }} 21 {{ ofWord }} 21</div>
+              <div style="font-family:var(--font-heading); font-size:28px;">Resource Hub</div>
+            </div>
+          </div>
+          <div class="card-kicker" style="margin-bottom: var(--space-2); font-size: 18px">Quick Reference: The 5-Step Cycle</div>
+          <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:var(--space-3); margin-bottom:var(--space-6);">
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-kicker" style="font-size: 16px">&nbsp;RECOGNIZE</div><p class="card-body" style="font-size: 14px">Identify signs of escalation through body language and vocal tone.</p></div>
+            <div class="card" style="background:var(--color-accent-2-100);"><div class="card-kicker" style="font-size: 16px">RESPOND</div><p class="card-body" style="font-size: 14px">Use a calm voice, listen actively, and acknowledge feelings without judgment.</p></div>
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-kicker" style="font-size: 16px">SET LIMITS</div><p class="card-body" style="font-size:14px;">Establish clear boundaries and offer choices, ensuring a sense of control.</p></div>
+            <div class="card" style="background:var(--color-accent-2-100);"><div class="card-kicker" style="font-size: 16px">ENGAGE NON-VERBALLY</div><p class="card-body" style="font-size:14px;">Maintain an open posture and relaxed facial expression to promote safety.</p></div>
+            <div class="card" style="background:var(--color-accent-100);"><div class="card-kicker" style="font-size: 16px">REFLECT &amp; LEARN</div><p class="card-body" style="font-size:14px;">Debrief, document, and prioritize self-care for future improvement.</p></div>
+          </div>
+          <div class="card elev-md" style="padding:var(--space-6); display:grid; grid-template-columns:auto 1fr; gap:var(--space-6); align-items:center;">
+            <img src="assets/resource-hub-qr.png" alt="QR code to the online Resource Hub" style="width:120px; height:120px; border-radius:var(--radius-lg);">
+            <div>
+              <div class="card-kicker" style="font-size: 16px">Resource Hub</div>
+              <p class="card-body" style="margin-bottom: var(--space-3); font-size: 14px">Questions after this course? Reach out to Stavros E. Delardas, LCSW, PMH-C, CLC, or your facility's Workplace Safety &amp; Infection Control Committee. Scan the code for the full online resources hub.</p>
+              <button type="button" class="btn btn-ghost" style="padding-left:0;" onClick="{{ goReferencesPage }}">View References →</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isScenarioPage }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Try It Scenario" class="card-kicker">{{ ui.tryIt }} · {{ currentScenario.related }}</div>
+          <div style="font-family:var(--font-heading); font-size:28px; margin-bottom:var(--space-5);">{{ ui.applyWhatYouLearned }}</div>
+          <div class="card elev-md" style="padding:var(--space-6);">
+            <sc-if value="{{ currentScenario.video }}" hint-placeholder-val="{{ false }}">
+              <video src="{{ currentScenario.video }}" controls="{{ true }}" style="width:100%; aspect-ratio:16/9; background:#000; border-radius:var(--radius-lg); margin-bottom:var(--space-5); display:block;"></video>
+            </sc-if>
+            <sc-if value="{{ currentScenario.narrative }}" hint-placeholder-val="{{ false }}">
+              <div style="background:var(--color-accent-100); border-radius:var(--radius-lg); padding:var(--space-4); margin-bottom:var(--space-5);">
+                <div class="card-kicker" style="margin-bottom:var(--space-2);">{{ ui.scenarioKicker }}</div>
+                <p style="margin:0; font-size:16px; line-height:1.6; font-style:italic;">{{ currentScenario.narrative }}</p>
+              </div>
+            </sc-if>
+            <sc-if value="{{ currentScenario.noVideo }}" hint-placeholder-val="{{ false }}">
+              <div style="width:100%; aspect-ratio:16/9; background:var(--color-neutral-100); border-radius:var(--radius-lg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--space-2); margin-bottom:var(--space-5); border:2px dashed var(--color-neutral-300);">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                <div style="font-weight:600; color:var(--color-neutral-700);">{{ ui.videoComingSoon }}</div>
+                <div style="font-size:14px; color:var(--color-neutral-500);">{{ ui.videoComingSoonSub }}</div>
+              </div>
+            </sc-if>
+            
+            <div style="display: grid; gap: 12px; position: relative; top: 0px">
+              <sc-for list="{{ currentScenario.options }}" as="opt" hint-placeholder-count="3">
+                <button type="button" class="btn {{ opt.btnClass }} btn-block" style="justify-content:flex-start; text-align:left; height:auto; padding:var(--space-3) var(--space-4);" onClick="{{ opt.onSelect }}">{{ opt.text }}</button>
+              </sc-for>
+            </div>
+            <sc-if value="{{ currentScenario.feedback }}" hint-placeholder-val="{{ false }}">
+              <p style="margin-top:var(--space-4); font-weight:600;">{{ currentScenario.feedback }}</p>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isGamePage }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Matching Game" style="margin-bottom:var(--space-4);">
+            <div class="card-kicker">{{ ui.practiceKicker }}</div>
+            <div style="font-family:var(--font-heading); font-size:24px; margin-bottom:var(--space-2);">{{ ui.gameTitle }}</div>
+            <p style="opacity:0.75; max-width:65ch; font-size:14px;">{{ currentGame.instructions }} {{ ui.gameInstructionsSuffix }}</p>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3); margin-bottom:var(--space-4);">
+            <sc-for list="{{ currentGame.categories }}" as="cat" hint-placeholder-count="2">
+              <div onDragOver="{{ cat.onDragOver }}" onDragLeave="{{ cat.onDragLeave }}" onDrop="{{ cat.onDrop }}" style="border-radius:var(--radius-lg); padding:var(--space-3); background:{{ cat.bg }}; min-height:160px; border-width:3px; border-style:dashed; border-color:{{ cat.dropBorderColor }}; transition:border-color .15s ease;">
+                <div style="font-family: var(--font-heading); font-size: 18px; margin-bottom: var(--space-2); color: {{ cat.varColor }}; text-align: center;">{{ cat.label }}</div><div style="display:grid; gap:var(--space-2);">
+                  <sc-for list="{{ cat.items }}" as="item" hint-placeholder-count="3">
+                    <div style="background:#fff; padding:var(--space-2) var(--space-3); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); font-size:14px; line-height:1.4; display:flex; align-items:center; justify-content:space-between; gap:var(--space-2);">
+                      <span>"{{ item.text }}"</span>
+                      <button type="button" class="btn-icon" title="Move back" onClick="{{ item.onRemove }}" style="flex-shrink:0;">✕</button>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ cat.items.length === 0 }}" hint-placeholder-val="{{ false }}">
+                    <div style="opacity:0.45; text-align:center; padding:var(--space-4) var(--space-3); font-size:13px; border-radius:var(--radius-md);">{{ ui.dropHere }}</div>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-bottom:var(--space-4);">
+            <div style="font-weight:600; margin-bottom:var(--space-2); font-size:13px; opacity:0.7;">{{ ui.dragHint }}</div>
+            <div style="display:flex; flex-wrap:wrap; gap:var(--space-2);">
+              <sc-for list="{{ currentGame.unassigned }}" as="stmt" hint-placeholder-count="4">
+                <div draggable="{{ true }}" onDragStart="{{ stmt.onDragStart }}" onDragEnd="{{ stmt.onDragEnd }}" style="cursor:grab; user-select:none; background:#fff; padding:var(--space-2) var(--space-3); border-radius:var(--radius-md); box-shadow:var(--shadow-md); font-size:14px; line-height:1.4; max-width:340px; opacity:{{ stmt.dragOpacity }};">"{{ stmt.text }}"</div>
+              </sc-for>
+              <sc-if value="{{ currentGame.unassigned.length === 0 }}" hint-placeholder-val="{{ false }}">
+                <div style="opacity:0.5; padding:var(--space-2) 0; font-size:14px;">{{ ui.allSorted }}</div>
+              </sc-if>
+            </div>
+          </div>
+
+          <sc-if value="{{ currentGame.isComplete }}" hint-placeholder-val="{{ false }}">
+            <div class="card" style="background:var(--color-accent-2-100); margin-bottom:var(--space-4);">
+              <div style="font-weight:600; margin-bottom:var(--space-1); font-size:14px;">{{ ui.scoreLabel }} {{ currentGame.score }} {{ ofWord }} {{ currentGame.total }}</div>
+              <p style="margin:0; font-size:14px;">{{ ui.gameCompleteMsg }}</p>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px; position: static; align-items: stretch">
+          <button type="button" class="btn btn-secondary" disabled="{{ isFirstSection }}" onClick="{{ prevLesson }}">{{ ui.back_ }}</button>
+          <button type="button" class="btn btn-primary" onClick="{{ nextLesson }}">{{ nextLessonLabel }}</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isPosttest }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Post-Test" style="margin-bottom:var(--space-6);">
+          <div class="card-kicker">{{ ui.finalCheck }}</div>
+          <div style="font-family:var(--font-heading); font-size:26px; margin-bottom:var(--space-2);">{{ ui.posttestTitle }}</div>
+          <p style="opacity:0.75; max-width:60ch;">{{ ui.posttestIntroPrefix }}{{ passingScoreLabel }}{{ ui.posttestIntroSuffix }}</p>
+        </div>
+        <div style="display:grid; gap:var(--space-4);">
+          <sc-for list="{{ posttestView }}" as="q" hint-placeholder-count="10">
+            <div class="card">
+              <div class="card-kicker">{{ ui.questionOf }} {{ q.num }} {{ ui.of10 }}</div>
+              <div class="card-title" style="font-size:18px;">{{ q.text }}</div>
+              <div style="display:grid; gap:var(--space-2); margin-top:var(--space-3);">
+                <sc-for list="{{ q.options }}" as="opt" hint-placeholder-count="4">
+                  <label class="radio cq-radio">
+                    <input type="radio" name="post-{{ q.num }}" checked="{{ opt.selected }}" onChange="{{ opt.onSelect }}">
+                    <span class="dot"></span>{{ opt.text }}
+                  </label>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="margin-top:var(--space-6);">
+          <button type="button" class="btn btn-primary btn-block" disabled="{{ posttestIncomplete }}" onClick="{{ submitPosttest }}">{{ ui.submitPosttest }}</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isResults }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Results" class="card elev-md" style="padding:var(--space-8); text-align:center;">
+          <span class="{{ resultTagClass }}">{{ resultLabel }}</span>
+          <div style="font-family:var(--font-heading); font-size:30px; margin:var(--space-4) 0 var(--space-1);">{{ learnerName }}</div>
+          <p style="opacity:0.7; margin-bottom:var(--space-6);">{{ resultDate }}</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); max-width:420px; margin:0 auto var(--space-6);">
+            <div class="card"><div class="card-kicker">{{ ui.pretestTitle }}</div><div style="font-family:var(--font-heading); font-size:28px;">{{ preScoreLabel }}</div></div>
+            <div class="card"><div class="card-kicker">{{ ui.posttestTitle }}</div><div style="font-family:var(--font-heading); font-size:28px;">{{ postScoreLabel }}</div></div>
+          </div>
+          <p style="max-width:50ch; margin:0 auto var(--space-6); opacity:0.85;">{{ resultMessage }}</p>
+          <div style="display:flex; gap:var(--space-3); justify-content:center;">
+            <sc-if value="{{ showRetake }}" hint-placeholder-val="{{ false }}">
+              <button type="button" class="btn btn-primary" onClick="{{ retakePosttest }}">Retake Post-Test</button>
+            </sc-if>
+            <button type="button" class="btn btn-secondary" onClick="{{ startOver }}">Done</button>
+          </div>
+          <p style="margin-top:var(--space-6); font-size:12px; opacity:0.55;">Your completion record has been saved to this browser's facilitator report.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAdminGate }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Facilitator Gate" class="card elev-md" style="padding:var(--space-8); max-width:420px; margin:0 auto;">
+          <div class="card-kicker">Restricted</div>
+          <div style="font-family:var(--font-heading); font-size:24px; margin-bottom:var(--space-2);">Facilitator Access</div>
+          <p class="card-body" style="margin-bottom:var(--space-4);">This report contains learner names, emails, and scores. Enter the facilitator passcode to continue.</p>
+          <div class="field" style="margin-bottom:var(--space-4);">
+            <label for="cq-admin-pass">Passcode</label>
+            <input class="input" id="cq-admin-pass" type="password" value="{{ adminPasscodeInput }}" onChange="{{ onAdminPasscodeChange }}" placeholder="Enter passcode">
+          </div>
+          <sc-if value="{{ adminError }}" hint-placeholder-val="{{ false }}">
+            <p style="color:var(--color-accent-700); font-size:14px; margin-bottom:var(--space-4);">Incorrect passcode.</p>
+          </sc-if>
+          <div style="display:flex; gap:var(--space-3);">
+            <button type="button" class="btn btn-primary" onClick="{{ submitAdminPasscode }}">Unlock</button>
+            <button type="button" class="btn btn-secondary" onClick="{{ cancelAdminGate }}">Cancel</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Facilitator Report" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--space-2);">
+          <div style="font-family:var(--font-heading); font-size:26px;">Facilitator Report</div>
+          <button type="button" class="btn btn-secondary" onClick="{{ exportCSV }}">Export CSV</button>
+        </div>
+        <p style="opacity:0.7; max-width:65ch; margin-bottom:var(--space-6);">This report lists completion attempts recorded on this browser/device only. Export the CSV after each training session to keep a combined roster.</p>
+        <sc-if value="{{ hasAttempts }}" hint-placeholder-val="{{ true }}">
+          <table class="table">
+            <thead><tr><th>Name</th><th>Email</th><th>Date</th><th>Pre-Test</th><th>Post-Test</th><th>Result</th></tr></thead>
+            <tbody>
+              <sc-for list="{{ attemptsView }}" as="a" hint-placeholder-count="3">
+                <tr>
+                  <td>{{ a.name }}</td>
+                  <td>{{ a.email }}</td>
+                  <td class="text-muted">{{ a.date }}</td>
+                  <td>{{ a.pre }}</td>
+                  <td>{{ a.post }}</td>
+                  <td><span class="{{ a.tagClass }}">{{ a.status }}</span></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </sc-if>
+        <sc-if value="{{ noAttempts }}" hint-placeholder-val="{{ false }}">
+          <div class="card"><p class="card-body">No completions recorded yet on this browser.</p></div>
+        </sc-if>
+      </sc-if>
+
+    </div></main>
+
+  
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;rhythm&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;airy&quot;,&quot;options&quot;:[&quot;cozy&quot;,&quot;balanced&quot;,&quot;airy&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;},&quot;frame&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;soft&quot;,&quot;options&quot;:[&quot;soft&quot;,&quot;structured&quot;,&quot;bold&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;},&quot;sectionMarkers&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;numbered&quot;,&quot;options&quot;:[&quot;numbered&quot;,&quot;minimal&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;}}">
+const QUESTIONS = [
+  { text: "What is the primary goal of de-escalation?", options: ["To win the argument", "To reduce intensity of conflict and restore safety and calm without physical intervention", "To remove the patient from care", "To document the incident only"], correct: 1 },
+  { text: "Which of the following is NOT a reason de-escalation matters?", options: ["Protects the safety of patients, staff, and visitors", "Preserves the dignity of distressed individuals", "Increases billing efficiency", "Supports therapeutic relationships"], correct: 2 },
+  { text: "Cultural humility means:", options: ["Knowing every culture in depth", "Recognizing your own blind spots and staying open, curious, and respectful", "Avoiding cultural topics altogether", "Treating every patient identically regardless of context"], correct: 1 },
+  { text: "Why might a patient escalate even when a staff member has done nothing wrong personally?", options: ["They are naturally difficult", "Prior systemic disrespect (e.g. racism, medical gaslighting) may heighten their sensitivity", "They dislike healthcare workers", "It happens at random"], correct: 1 },
+  { text: "Which is a common trigger for escalation in healthcare settings?", options: ["Long wait times", "Billing or insurance issues", "Perceived lack of control", "All of the above"], correct: 3 },
+  { text: "Which is an early warning sign of escalation?", options: ["Raised voice or rapid breathing", "Calm, steady tone", "Smiling", "Sitting quietly"], correct: 0 },
+  { text: "An example of unintentional staff escalation is:", options: ["Active listening", "Interrupting or standing too close", "Offering choices", "Using a calm tone"], correct: 1 },
+  { text: "When using clear communication during de-escalation, you should:", options: ["Use jargon to sound authoritative", "Speak quickly to resolve things faster", "Use simple, clear language and a calm tone", "Avoid speaking at all"], correct: 2 },
+  { text: "Offering choices during a tense interaction helps because it:", options: ["Restores a sense of control to the person", "Confuses the person", "Shows you're in charge", "Slows down care unnecessarily"], correct: 0 },
+  { text: "If a situation escalates beyond what verbal de-escalation can manage, you should:", options: ["Continue engaging alone indefinitely", "Disengage and follow internal safety protocols", "Raise your voice to match theirs", "Ignore it"], correct: 1 }
+];
+
+const QUESTIONS_ES = [
+  { text: "¿Cuál es el objetivo principal de la desescalada?", options: ["Ganar la discusión", "Reducir la intensidad del conflicto y restablecer la seguridad y la calma sin necesidad de intervención física", "Retirar al paciente de la atención", "Documentar el incidente únicamente"], correct: 1 },
+  { text: "¿Cuál de las siguientes NO es una razón por la que la desescalada es importante?", options: ["Protege la seguridad de pacientes, personal y visitantes", "Preserva la dignidad de las personas angustiadas", "Aumenta la eficiencia de facturación", "Apoya las relaciones terapéuticas"], correct: 2 },
+  { text: "La humildad cultural significa:", options: ["Conocer a fondo cada cultura", "Reconocer sus propios puntos ciegos y mantenerse abierto, curioso y respetuoso", "Evitar por completo los temas culturales", "Tratar a cada paciente de manera idéntica sin importar el contexto"], correct: 1 },
+  { text: "¿Por qué podría un paciente escalar aunque un miembro del personal no haya hecho nada malo personalmente?", options: ["Son naturalmente difíciles", "Experiencias previas de falta de respeto sistémico (por ejemplo, racismo, invalidación médica) pueden aumentar su sensibilidad", "No les agradan los trabajadores de la salud", "Sucede al azar"], correct: 1 },
+  { text: "¿Cuál es un desencadenante común de escalada en entornos de salud?", options: ["Tiempos de espera largos", "Problemas de facturación o seguro", "Percepción de falta de control", "Todas las anteriores"], correct: 3 },
+  { text: "¿Cuál es una señal temprana de advertencia de escalada?", options: ["Voz elevada o respiración acelerada", "Tono calmado y constante", "Sonreír", "Sentarse en silencio"], correct: 0 },
+  { text: "Un ejemplo de escalada involuntaria por parte del personal es:", options: ["Escucha activa", "Interrumpir o pararse demasiado cerca", "Ofrecer opciones", "Usar un tono calmado"], correct: 1 },
+  { text: "Al usar comunicación clara durante la desescalada, debe:", options: ["Usar jerga para sonar autoritario", "Hablar rápido para resolver las cosas más rápido", "Usar un lenguaje simple y claro con un tono calmado", "Evitar hablar por completo"], correct: 2 },
+  { text: "Ofrecer opciones durante una interacción tensa ayuda porque:", options: ["Restablece un sentido de control en la persona", "Confunde a la persona", "Demuestra que usted está a cargo", "Retrasa la atención innecesariamente"], correct: 0 },
+  { text: "Si una situación escala más allá de lo que la desescalada verbal puede manejar, debe:", options: ["Continuar interactuando solo indefinidamente", "Retirarse y seguir los protocolos internos de seguridad", "Elevar la voz para igualar la de ellos", "Ignorarlo"], correct: 1 }
+];
+
+const SCENARIO_BANK = {
+  bias1: {
+    narrative: "A new patient is checked in for their first visit with you. Before you've said more than a greeting, they're short and defensive, arms crossed, answering questions with as few words as possible. Nothing has happened yet in this interaction to explain the guardedness.",
+    prompt: "A patient becomes defensive and short with you almost immediately, even though this is your first interaction with them. What's the most helpful assumption to start with?",
+    options: [
+      { text: "They're just a rude person.", correct: false, feedback: "This shuts down curiosity and ignores that their reaction may come from something bigger than this moment." },
+      { text: "Their reaction might be shaped by past experiences with the healthcare system, not by anything I've done.", correct: true, feedback: "Right, recognizing systemic influence helps you respond with empathy instead of taking it personally." },
+      { text: "I should match their tone so they know I mean business.", correct: false, feedback: "Matching a defensive tone usually escalates things further." }
+    ]
+  },
+  cultural1: {
+    narrative: "You're asking a patient routine intake questions. They avoid eye contact throughout and answer each question in short, flat sentences with little inflection. After a few exchanges like this, you start to wonder if they're being difficult on purpose.",
+    prompt: "A neurodivergent patient avoids eye contact and answers in short, flat sentences. You start to feel like they're being difficult. What's the better read?",
+    options: [
+      { text: "Assume they're being rude and disengage from the conversation.", correct: false, feedback: "This misreads a communication style as defiance and can shut down trust." },
+      { text: "Recognize this may simply be how they communicate, and adjust your approach with patience and cultural humility.", correct: true, feedback: "Right, cultural humility means not assuming your read on someone's behavior is the only valid one." },
+      { text: "Raise your voice slightly to make sure they're paying attention.", correct: false, feedback: "Raising your tone can feel confrontational and increase distress." }
+    ]
+  },
+  triggers1: {
+    narrative: "A patient has been in the waiting room for two hours. They're now on their feet, pacing near the front desk, arms crossed, and their voice has started to carry across the room as they ask, again, how much longer it will be.",
+    prompt: "A patient in the waiting room is raising their voice about a two-hour wait, arms crossed, pacing. What do you do first?",
+    options: [
+      { text: "Tell them to calm down or that they need to leave.", correct: false, feedback: "This can feel dismissive and often increases agitation instead of reducing it." },
+      { text: "Acknowledge their frustration, apologize for the wait, and offer a choice, an updated estimate or a callback.", correct: true, feedback: "Right, this shows empathy, respects their dignity, and restores a sense of control." },
+      { text: "Avoid eye contact and keep working until they stop.", correct: false, feedback: "Ignoring the person tends to escalate frustration further." }
+    ]
+  },
+  triggers2: {
+    narrative: "It's the last appointment of the day. A patient steps up to the front desk expecting a routine copay, but the receptionist explains their insurance didn't cover a procedure, leaving a much larger balance. The patient's voice rises immediately: \"Nobody told me this would cost extra. This is ridiculous.\" Two other patients in the waiting room look over.",
+    prompt: "A patient becomes visibly frustrated after learning about a surprise cost their insurance didn't cover, and raises their voice at the front desk. What's the better response?",
+    options: [
+      { text: "Explain the billing policy word-for-word and ask them to lower their voice.", correct: false, feedback: "Leading with policy before empathy can feel cold and increase defensiveness." },
+      { text: "Acknowledge their frustration, briefly explain what happened, and calmly walk through their options.", correct: true, feedback: "Right, naming the emotion first, then offering a solutions-focused path, reduces defensiveness." },
+      { text: "Tell them billing issues aren't something you handle and to call the number on their statement.", correct: false, feedback: "This can feel dismissive, like you're passing them off without support." }
+    ]
+  },
+  warning1: {
+    narrative: "A patient has been waiting nearly forty minutes for lab results. When you check in on them, their answers come back short and clipped, and their foot is tapping rapidly against the chair leg. Nothing has been said or done yet that would count as escalation, but something has clearly shifted since they first sat down.",
+    prompt: "A patient starts giving short, clipped answers and taps their foot rapidly while waiting for labs. What should this tell you?",
+    options: [
+      { text: "Nothing, some people just fidget.", correct: false, feedback: "These are early warning signs worth responding to before they build further." },
+      { text: "These are early signs of rising frustration, it's a good time to check in.", correct: true, feedback: "Right, catching early warning signs lets you intervene before a situation intensifies." },
+      { text: "They're probably being dramatic.", correct: false, feedback: "Labeling the behavior instead of noticing the signal can make it harder to respond with empathy." }
+    ]
+  },
+  unintentional1: {
+    narrative: "You're running twenty minutes behind and still have a full afternoon ahead. A patient asks, for the third time this visit, when their referral will go through. You feel your patience thinning, and you're aware that whatever you say next, and how you say it, will land differently than it would on a slower day.",
+    prompt: "You're behind schedule and a patient asks the same question for the third time. What response is least likely to unintentionally escalate them?",
+    options: [
+      { text: "\"We already went over this.\"", correct: false, feedback: "This can feel dismissive, even if it's technically true." },
+      { text: "\"Let me explain that again a different way.\"", correct: true, feedback: "Right, reframing rather than dismissing keeps the door open instead of shutting it." },
+      { text: "Sigh and answer quickly while looking at your watch.", correct: false, feedback: "Non-verbal impatience can land as disrespect even if you don't say anything unkind." }
+    ]
+  },
+  calm1: {
+    narrative: "A patient who has been growing more upset over the course of the conversation suddenly raises their voice, speaking directly and loudly at you. There's a beat where the room feels tense, and how you respond in the next few seconds will set the tone for what happens next.",
+    prompt: "A patient starts raising their voice at you directly. What's the best first move?",
+    options: [
+      { text: "Raise your voice slightly so you're heard over them.", correct: false, feedback: "Matching their volume usually raises the temperature instead of lowering it." },
+      { text: "Take a slow breath, lower your own volume, and keep your posture relaxed.", correct: true, feedback: "Right, your calm can be contagious, and it signals safety rather than confrontation." },
+      { text: "Step back and stay completely silent with no reaction.", correct: false, feedback: "Total silence with no engagement can feel dismissive rather than calming." }
+    ]
+  },
+  empathy1: {
+    narrative: "A patient sighs heavily as you sit down and says, \"Nobody here listens to me,\" before you've even asked a question. It's the kind of comment that could easily be brushed off as an exaggeration, but the frustration behind it sounds real.",
+    prompt: "A frustrated patient says, \"Nobody here listens to me.\" What's the best response?",
+    options: [
+      { text: "\"That's not true, we're listening right now.\"", correct: false, feedback: "Correcting their feeling first tends to increase defensiveness." },
+      { text: "\"I can see this is frustrating, tell me what's been happening.\"", correct: true, feedback: "Right, acknowledging the feeling before addressing the facts opens the door to collaboration." },
+      { text: "\"Let's not get into that, let's focus on today's visit.\"", correct: false, feedback: "Deflecting the emotion can feel like being dismissed again." }
+    ]
+  },
+  comm1: {
+    narrative: "You walk in with a short mental checklist: move the patient to another room, take their vitals, and get a form signed before the next appointment. The patient is already a little anxious about being at the clinic, and you can tell that too much at once will overwhelm them.",
+    prompt: "You need a patient to change rooms, get vitals taken, and sign a form. How should you communicate this?",
+    options: [
+      { text: "List all three steps at once so they know the full plan.", correct: false, feedback: "Multiple instructions at once can overwhelm someone who's already stressed." },
+      { text: "\"Let's start by moving to this room.\" One step at a time.", correct: true, feedback: "Right, one clear instruction at a time reduces overwhelm and builds a sense of control." },
+      { text: "Use the clinical terms so they understand the process fully.", correct: false, feedback: "Jargon can make people feel confused or excluded rather than informed." }
+    ]
+  },
+  space1: {
+    narrative: "You're in a small exam room with a patient who's clearly upset about a diagnosis. The room only has one door, and there's a rolling stool, a cart, and a chair between you and it. Before you say anything else, you take stock of where everyone is standing.",
+    prompt: "You're speaking with an upset patient in a small exam room. What's the safest setup?",
+    options: [
+      { text: "Stand directly in front of the door so they can't leave mid-conversation.", correct: false, feedback: "Blocking the exit can make someone feel trapped, which raises anxiety and risk." },
+      { text: "Position yourself with a clear path to the door for both of you, at a comfortable distance.", correct: true, feedback: "Right, visible, accessible exits help everyone feel safer, which lowers the chance of escalation." },
+      { text: "Stand very close so they have to focus on you.", correct: false, feedback: "Closing the distance uninvited can feel confrontational." }
+    ]
+  },
+  choices1: {
+    narrative: "A patient stands with their arms crossed, refusing to sit on the exam table. It's not clear if it's discomfort, distrust, or something else, but repeating the same instruction hasn't worked, and pressing harder feels like it would only make things worse.",
+    prompt: "A patient refuses to sit down for an exam. What's a better approach than insisting?",
+    options: [
+      { text: "\"You have to sit down, that's the process.\"", correct: false, feedback: "A flat command can feel like a loss of control, which can increase resistance." },
+      { text: "\"Would you like to sit here, or would the chair by the window be more comfortable?\"", correct: true, feedback: "Right, offering a real choice restores a sense of control while still moving things forward." },
+      { text: "Skip the exam entirely to avoid conflict.", correct: false, feedback: "Avoiding the task altogether isn't necessary, reframing the request as a choice is usually enough." }
+    ]
+  },
+  nonverbal1: {
+    narrative: "You're listening to a patient describe a stressful week, and partway through you notice your own arms have crossed over your chest. You didn't mean anything by it, you're just tired, but you catch yourself wondering how it looks from where they're sitting.",
+    prompt: "While listening to a distressed patient, you notice you're crossing your arms. What should you do?",
+    options: [
+      { text: "Keep going, it doesn't matter as long as your words are calm.", correct: false, feedback: "Body language often communicates louder than words, especially to someone already on edge." },
+      { text: "Consciously uncross your arms and keep your hands visible.", correct: true, feedback: "Right, an open posture signals safety and helps de-escalate, even without saying a word." },
+      { text: "Cross your arms tighter to seem authoritative.", correct: false, feedback: "This can read as defensive or intimidating rather than in control." }
+    ]
+  },
+  safety1: {
+    narrative: "A conversation that started as a raised voice has changed quickly. The patient slams their hand on the counter and takes a step toward you, closing the distance that was there a moment ago. Your training up to this point has been about calm words and open posture, but the situation has moved past what those alone can resolve.",
+    prompt: "A patient's behavior moves from raised voice to slamming a hand on the counter and stepping closer to you. What's the appropriate next step?",
+    options: [
+      { text: "Continue trying to reason with them one-on-one no matter what.", correct: false, feedback: "Once behavior becomes physically threatening, continuing alone increases risk." },
+      { text: "Calmly disengage, create distance, and follow your facility's safety protocol.", correct: true, feedback: "Right, disengaging is a safety decision, not a failure. Follow your team's protocol from here." },
+      { text: "Match their energy to show you won't back down.", correct: false, feedback: "Escalating in response raises risk for everyone in the room." }
+    ]
+  },
+  safety2: {
+    narrative: "An elderly patient has grown increasingly agitated over a mix-up with their appointment time. As you approach to help, you notice they've raised their cane slightly, not necessarily to strike, but enough that the intent is unclear.",
+    prompt: "While helping an agitated patient, you notice they're holding a cane raised like they might swing it. What's the best course of action?",
+    options: [
+      { text: "Leave the area calmly and immediately alert a coworker or security.", correct: true, feedback: "Right, disengaging and getting support is safest for everyone; don't try to manage a weapon alone." },
+      { text: "Grab the cane from them before they can use it.", correct: false, feedback: "Trying to confiscate an object in the moment can provoke a struggle and increase risk of injury." },
+      { text: "Keep talking as if you haven't noticed, hoping they'll set it down.", correct: false, feedback: "Ignoring a visible risk delays the team response you need." }
+    ]
+  }
+};
+
+const SCENARIO_BANK_ES = {
+  bias1: {
+    narrative: "Un nuevo paciente llega a su primera cita con usted. Antes de que haya dicho más que un saludo, el paciente se muestra cortante y a la defensiva, con los brazos cruzados, respondiendo con la menor cantidad de palabras posible. Nada ha ocurrido todavía en esta interacción que explique esa actitud reservada.",
+    prompt: "Un paciente se pone a la defensiva y responde de forma cortante casi de inmediato, aunque esta es su primera interacción con él. ¿Cuál es la suposición más útil con la que empezar?",
+    options: [
+      { text: "Simplemente es una persona grosera.", correct: false, feedback: "Esto cierra la curiosidad e ignora que su reacción puede provenir de algo más grande que este momento." },
+      { text: "Su reacción podría estar moldeada por experiencias pasadas con el sistema de salud, no por algo que yo haya hecho.", correct: true, feedback: "Correcto, reconocer la influencia sistémica le ayuda a responder con empatía en lugar de tomarlo como algo personal." },
+      { text: "Debería igualar su tono para que sepan que hablo en serio.", correct: false, feedback: "Igualar un tono defensivo generalmente escala aún más la situación." }
+    ]
+  },
+  cultural1: {
+    narrative: "Usted le hace a un paciente las preguntas de admisión de rutina. El paciente evita el contacto visual durante toda la conversación y responde cada pregunta con frases cortas y planas, con poca entonación. Después de varios intercambios así, usted empieza a preguntarse si lo está haciendo a propósito.",
+    prompt: "Un paciente neurodivergente evita el contacto visual y responde con frases cortas y planas. Usted empieza a sentir que está siendo difícil. ¿Cuál es la mejor interpretación?",
+    options: [
+      { text: "Suponer que está siendo grosero y desconectarse de la conversación.", correct: false, feedback: "Esto malinterpreta un estilo de comunicación como desafío y puede cerrar la confianza." },
+      { text: "Reconocer que esta puede ser simplemente su forma de comunicarse, y ajustar su enfoque con paciencia y humildad cultural.", correct: true, feedback: "Correcto, la humildad cultural significa no asumir que su interpretación del comportamiento de alguien es la única válida." },
+      { text: "Elevar un poco la voz para asegurarse de que está prestando atención.", correct: false, feedback: "Elevar el tono puede sentirse confrontacional y aumentar la angustia." }
+    ]
+  },
+  triggers1: {
+    narrative: "Un paciente ha estado en la sala de espera durante dos horas. Ahora está de pie, caminando de un lado a otro cerca de la recepción, con los brazos cruzados, y su voz ha comenzado a escucharse por toda la sala mientras pregunta, otra vez, cuánto más tendrá que esperar.",
+    prompt: "Un paciente en la sala de espera está elevando la voz por una espera de dos horas, con los brazos cruzados, caminando de un lado a otro. ¿Qué hace primero?",
+    options: [
+      { text: "Decirle que se calme o que debe irse.", correct: false, feedback: "Esto puede sentirse desdeñoso y a menudo aumenta la agitación en lugar de reducirla." },
+      { text: "Reconocer su frustración, disculparse por la espera, y ofrecer una opción: un cálculo de tiempo actualizado o una devolución de llamada.", correct: true, feedback: "Correcto, esto muestra empatía, respeta su dignidad y restablece un sentido de control." },
+      { text: "Evitar el contacto visual y seguir trabajando hasta que se detenga.", correct: false, feedback: "Ignorar a la persona tiende a aumentar aún más la frustración." }
+    ]
+  },
+  triggers2: {
+    narrative: "Es la última cita del día. Un paciente se acerca a la recepción esperando pagar un copago de rutina, pero la recepcionista le explica que su seguro no cubrió un procedimiento, dejando un saldo mucho mayor. La voz del paciente se eleva de inmediato: \"Nadie me dijo que esto costaría extra. Esto es ridículo.\" Otros dos pacientes en la sala de espera voltean a mirar.",
+    prompt: "Un paciente se muestra visiblemente frustrado al enterarse de un costo sorpresa que su seguro no cubrió, y eleva la voz en la recepción. ¿Cuál es la mejor respuesta?",
+    options: [
+      { text: "Explicar la política de facturación palabra por palabra y pedirle que baje la voz.", correct: false, feedback: "Comenzar con la política antes que con la empatía puede sentirse frío y aumentar la actitud defensiva." },
+      { text: "Reconocer su frustración, explicar brevemente lo que sucedió y repasar con calma sus opciones.", correct: true, feedback: "Correcto, nombrar primero la emoción y luego ofrecer un camino centrado en soluciones reduce la actitud defensiva." },
+      { text: "Decirle que los problemas de facturación no son algo que usted maneje y que llame al número en su estado de cuenta.", correct: false, feedback: "Esto puede sentirse desdeñoso, como si lo estuviera derivando sin apoyo." }
+    ]
+  },
+  warning1: {
+    narrative: "Un paciente ha esperado casi cuarenta minutos por los resultados de laboratorio. Cuando usted se acerca a ver cómo está, sus respuestas son cortas y secas, y su pie golpetea rápidamente contra la pata de la silla. Aún no se ha dicho ni hecho nada que cuente como escalada, pero algo claramente ha cambiado desde que se sentó.",
+    prompt: "Un paciente comienza a dar respuestas cortas y secas y golpetea el pie rápidamente mientras espera los laboratorios. ¿Qué debería indicarle esto?",
+    options: [
+      { text: "Nada, algunas personas simplemente se mueven inquietas.", correct: false, feedback: "Estas son señales tempranas de advertencia que vale la pena atender antes de que aumenten más." },
+      { text: "Estas son señales tempranas de frustración creciente; es un buen momento para acercarse.", correct: true, feedback: "Correcto, detectar señales tempranas de advertencia le permite intervenir antes de que una situación se intensifique." },
+      { text: "Probablemente esté siendo dramático.", correct: false, feedback: "Etiquetar el comportamiento en lugar de notar la señal puede dificultar responder con empatía." }
+    ]
+  },
+  unintentional1: {
+    narrative: "Usted lleva veinte minutos de retraso y todavía tiene una tarde completa por delante. Un paciente pregunta, por tercera vez en esta visita, cuándo se procesará su referido. Siente que su paciencia se agota, y es consciente de que lo que diga a continuación, y cómo lo diga, se percibirá diferente de lo que sería en un día más tranquilo.",
+    prompt: "Usted va retrasado y un paciente hace la misma pregunta por tercera vez. ¿Qué respuesta es menos probable que lo escale sin querer?",
+    options: [
+      { text: "\"Ya hablamos de esto.\"", correct: false, feedback: "Esto puede sentirse desdeñoso, aunque técnicamente sea cierto." },
+      { text: "\"Déjeme explicarle eso de nuevo de otra manera.\"", correct: true, feedback: "Correcto, reformular en lugar de descartar mantiene la puerta abierta en lugar de cerrarla." },
+      { text: "Suspirar y responder rápido mientras mira su reloj.", correct: false, feedback: "La impaciencia no verbal puede percibirse como falta de respeto, aunque no diga nada desagradable." }
+    ]
+  },
+  calm1: {
+    narrative: "Un paciente que ha ido molestándose cada vez más a lo largo de la conversación de repente eleva la voz, hablando directamente y con fuerza hacia usted. Hay un instante en que la sala se siente tensa, y cómo responda en los próximos segundos marcará el tono de lo que sigue.",
+    prompt: "Un paciente comienza a elevar la voz directamente hacia usted. ¿Cuál es la mejor primera acción?",
+    options: [
+      { text: "Elevar un poco la voz para que lo escuchen por encima de ellos.", correct: false, feedback: "Igualar su volumen generalmente sube la temperatura en lugar de bajarla." },
+      { text: "Respirar lentamente, bajar su propio volumen y mantener una postura relajada.", correct: true, feedback: "Correcto, su calma puede ser contagiosa y transmite seguridad en lugar de confrontación." },
+      { text: "Retroceder y permanecer completamente en silencio sin ninguna reacción.", correct: false, feedback: "El silencio total sin interacción puede sentirse desdeñoso en lugar de calmante." }
+    ]
+  },
+  empathy1: {
+    narrative: "Un paciente suspira profundamente al sentarse y dice: \"Aquí nadie me escucha\", antes de que usted haya hecho siquiera una pregunta. Es el tipo de comentario que fácilmente podría descartarse como una exageración, pero la frustración detrás de él suena real.",
+    prompt: "Un paciente frustrado dice: \"Aquí nadie me escucha.\" ¿Cuál es la mejor respuesta?",
+    options: [
+      { text: "\"Eso no es cierto, lo estamos escuchando ahora mismo.\"", correct: false, feedback: "Corregir primero su sentimiento tiende a aumentar la actitud defensiva." },
+      { text: "\"Veo que esto es frustrante, cuénteme qué ha estado pasando.\"", correct: true, feedback: "Correcto, reconocer el sentimiento antes de abordar los hechos abre la puerta a la colaboración." },
+      { text: "\"No entremos en eso, enfoquémonos en la visita de hoy.\"", correct: false, feedback: "Desviar la emoción puede sentirse como ser ignorado de nuevo." }
+    ]
+  },
+  comm1: {
+    narrative: "Usted entra con una breve lista mental: mover al paciente a otra sala, tomar sus signos vitales y conseguir que firme un formulario antes de la siguiente cita. El paciente ya está un poco ansioso por estar en la clínica, y usted percibe que demasiadas cosas a la vez lo abrumarían.",
+    prompt: "Necesita que un paciente cambie de sala, se le tomen los signos vitales y firme un formulario. ¿Cómo debería comunicar esto?",
+    options: [
+      { text: "Enumerar los tres pasos de una vez para que conozca el plan completo.", correct: false, feedback: "Varias instrucciones a la vez pueden abrumar a alguien que ya está estresado." },
+      { text: "\"Comencemos moviéndonos a esta sala.\" Un paso a la vez.", correct: true, feedback: "Correcto, una instrucción clara a la vez reduce el agobio y genera un sentido de control." },
+      { text: "Usar los términos clínicos para que entienda completamente el proceso.", correct: false, feedback: "La jerga puede hacer que las personas se sientan confundidas o excluidas en lugar de informadas." }
+    ]
+  },
+  space1: {
+    narrative: "Está en una sala de exámenes pequeña con un paciente claramente molesto por un diagnóstico. La sala solo tiene una puerta, y hay un taburete con ruedas, un carrito y una silla entre usted y la salida. Antes de decir algo más, evalúa dónde está parado cada uno.",
+    prompt: "Está hablando con un paciente molesto en una sala de exámenes pequeña. ¿Cuál es la configuración más segura?",
+    options: [
+      { text: "Pararse justo frente a la puerta para que no pueda salir a mitad de la conversación.", correct: false, feedback: "Bloquear la salida puede hacer que alguien se sienta atrapado, lo que aumenta la ansiedad y el riesgo." },
+      { text: "Colocarse de manera que ambos tengan un camino despejado hacia la puerta, a una distancia cómoda.", correct: true, feedback: "Correcto, las salidas visibles y accesibles ayudan a que todos se sientan más seguros, lo que reduce la probabilidad de escalada." },
+      { text: "Pararse muy cerca para que tenga que concentrarse en usted.", correct: false, feedback: "Reducir la distancia sin ser invitado puede sentirse confrontacional." }
+    ]
+  },
+  choices1: {
+    narrative: "Un paciente permanece de pie con los brazos cruzados, negándose a sentarse en la camilla. No está claro si es incomodidad, desconfianza u otra cosa, pero repetir la misma instrucción no ha funcionado, y presionar más parece que solo empeoraría las cosas.",
+    prompt: "Un paciente se niega a sentarse para un examen. ¿Cuál es un mejor enfoque que insistir?",
+    options: [
+      { text: "\"Tiene que sentarse, así es el proceso.\"", correct: false, feedback: "Una orden directa puede sentirse como una pérdida de control, lo que puede aumentar la resistencia." },
+      { text: "\"¿Le gustaría sentarse aquí, o estaría más cómodo en la silla junto a la ventana?\"", correct: true, feedback: "Correcto, ofrecer una opción real restablece un sentido de control mientras las cosas siguen avanzando." },
+      { text: "Omitir el examen por completo para evitar el conflicto.", correct: false, feedback: "No es necesario evitar la tarea por completo; generalmente basta con replantear la solicitud como una opción." }
+    ]
+  },
+  nonverbal1: {
+    narrative: "Está escuchando a un paciente describir una semana estresante, y a mitad de la conversación nota que ha cruzado los brazos sobre el pecho. No lo hizo con mala intención, simplemente está cansado, pero se pregunta cómo se ve desde donde está sentado el paciente.",
+    prompt: "Mientras escucha a un paciente angustiado, nota que tiene los brazos cruzados. ¿Qué debería hacer?",
+    options: [
+      { text: "Continuar, no importa mientras sus palabras sean calmadas.", correct: false, feedback: "El lenguaje corporal a menudo comunica más fuerte que las palabras, especialmente a alguien que ya está alterado." },
+      { text: "Descruzar conscientemente los brazos y mantener las manos visibles.", correct: true, feedback: "Correcto, una postura abierta transmite seguridad y ayuda a desescalar, incluso sin decir una palabra." },
+      { text: "Cruzar los brazos con más fuerza para parecer autoritario.", correct: false, feedback: "Esto puede interpretarse como defensivo o intimidante en lugar de tener el control." }
+    ]
+  },
+  safety1: {
+    narrative: "Una conversación que comenzó como una voz elevada ha cambiado rápidamente. El paciente golpea el mostrador con la mano y da un paso hacia usted, cerrando la distancia que había un momento antes. Su formación hasta ahora se ha centrado en palabras calmadas y una postura abierta, pero la situación ha superado lo que eso solo puede resolver.",
+    prompt: "El comportamiento de un paciente pasa de voz elevada a golpear el mostrador con la mano y acercarse a usted. ¿Cuál es el siguiente paso apropiado?",
+    options: [
+      { text: "Seguir tratando de razonar con él a solas sin importar qué.", correct: false, feedback: "Una vez que el comportamiento se vuelve físicamente amenazante, continuar solo aumenta el riesgo." },
+      { text: "Retirarse con calma, crear distancia y seguir el protocolo de seguridad de su institución.", correct: true, feedback: "Correcto, retirarse es una decisión de seguridad, no un fracaso. Siga el protocolo de su equipo a partir de aquí." },
+      { text: "Igualar su energía para demostrar que no va a retroceder.", correct: false, feedback: "Escalar en respuesta aumenta el riesgo para todos en la sala." }
+    ]
+  },
+  safety2: {
+    narrative: "Un paciente de edad avanzada se ha ido agitando cada vez más por una confusión con la hora de su cita. Al acercarse para ayudar, usted nota que ha levantado un poco su bastón, no necesariamente para golpear, pero lo suficiente como para que la intención no esté clara.",
+    prompt: "Mientras ayuda a un paciente agitado, nota que sostiene un bastón levantado como si fuera a agitarlo. ¿Cuál es la mejor acción a seguir?",
+    options: [
+      { text: "Retirarse del área con calma y alertar de inmediato a un compañero o a seguridad.", correct: true, feedback: "Correcto, retirarse y buscar apoyo es lo más seguro para todos; no intente manejar un objeto potencialmente peligroso solo." },
+      { text: "Quitarle el bastón antes de que pueda usarlo.", correct: false, feedback: "Tratar de confiscar un objeto en el momento puede provocar un forcejeo y aumentar el riesgo de lesiones." },
+      { text: "Seguir hablando como si no lo hubiera notado, esperando que lo baje.", correct: false, feedback: "Ignorar un riesgo visible retrasa la respuesta del equipo que necesita." }
+    ]
+  }
+};
+
+const STEPS = [
+  { kind: "content", idx: 0 },
+  { kind: "content", idx: 1 },
+  { kind: "scenario", id: "bias1", related: "Before We Respond" },
+  { kind: "content", idx: 2 },
+  { kind: "content", idx: 2.1 },
+  { kind: "content", idx: 2.2 },
+  { kind: "scenario", id: "cultural1", related: "Cultural Humility" },
+  { kind: "content", idx: 3 },
+  { kind: "content", idx: 4 },
+  { kind: "scenario", id: "triggers1", related: "Common Triggers" },
+  { kind: "scenario", id: "triggers2", related: "Common Triggers" },
+  { kind: "content", idx: 5 },
+  { kind: "scenario", id: "warning1", related: "Early Warning Signs" },
+  { kind: "content", idx: 6 },
+  { kind: "scenario", id: "unintentional1", related: "Unintentional Escalation" },
+  { kind: "content", idx: 7 },
+  { kind: "scenario", id: "calm1", related: "Stay Calm & Controlled" },
+  { kind: "content", idx: 8 },
+  { kind: "scenario", id: "empathy1", related: "Show Respect & Empathy" },
+  { kind: "content", idx: 9 },
+  { kind: "practice", id: "sayThisNotThat" },
+  { kind: "scenario", id: "comm1", related: "Simple & Clear Communication" },
+  { kind: "content", idx: 10 },
+  { kind: "scenario", id: "space1", related: "Maintain a Safe Space" },
+  { kind: "content", idx: 11 },
+  { kind: "scenario", id: "choices1", related: "Offer Choices" },
+  { kind: "content", idx: 12 },
+  { kind: "scenario", id: "nonverbal1", related: "Non-Verbal Awareness" },
+  { kind: "content", idx: 13 },
+  { kind: "content", idx: 13.1 },
+  { kind: "scenario", id: "safety1", related: "Safety & Boundaries" },
+  { kind: "scenario", id: "safety2", related: "Safety & Boundaries" },
+  { kind: "content", idx: 14 },
+  { kind: "content", idx: 15 },
+  { kind: "content", idx: 16 },
+  { kind: "content", idx: 17 }
+];
+
+const PASSING_SCORE = 80;
+const STORAGE_KEY = "chcr_deescalation_attempts";
+const ADMIN_PASSCODE = "CHCR-Safety1";
+
+const SAY_THIS_NOT_THAT_GAME = {
+  instructions: "Drag each statement into the correct category.",
+  categories: [
+    { id: "say", label: "Say This", varColor: "var(--color-accent-2-700)", bg: "var(--color-accent-2-100)" },
+    { id: "notSay", label: "Not That", varColor: "var(--color-accent-700)", bg: "var(--color-accent-100)" }
+  ],
+  statements: [
+    { id: "s1", text: "I can see this is really upsetting for you.", category: "say" },
+    { id: "s2", text: "You need to calm down right now.", category: "notSay" },
+    { id: "s3", text: "Let's figure out how to make this better.", category: "say" },
+    { id: "s4", text: "That's not fair, you're overreacting.", category: "notSay" },
+    { id: "s5", text: "I'm here to help. What's most important to address first?", category: "say" },
+    { id: "s6", text: "Why are you always so difficult?", category: "notSay" },
+    { id: "s7", text: "I understand this is frustrating.", category: "say" },
+    { id: "s8", text: "Just do what I say and stop complaining.", category: "notSay" },
+    { id: "s9", text: "Take your time, I'm not going anywhere.", category: "say" },
+    { id: "s10", text: "I don't have time for this right now.", category: "notSay" },
+    { id: "s11", text: "Would you like to sit here or over by the window?", category: "say" },
+    { id: "s12", text: "You have to sit down, that's the rule.", category: "notSay" }
+  ]
+};
+
+const GAME_TEXT_ES = {
+  s1: "Veo que esto es muy molesto para usted.", s2: "Necesita calmarse ahora mismo.",
+  s3: "Averigüemos cómo mejorar esto.", s4: "Eso no es justo, está exagerando.",
+  s5: "Estoy aquí para ayudar. ¿Qué es lo más importante que debemos atender primero?",
+  s6: "¿Por qué siempre es tan difícil?", s7: "Entiendo que esto es frustrante.",
+  s8: "Simplemente haga lo que digo y deje de quejarse.",
+  s9: "Tómese su tiempo, no me voy a ninguna parte.", s10: "No tengo tiempo para esto ahora.",
+  s11: "¿Le gustaría sentarse aquí o junto a la ventana?", s12: "Tiene que sentarse, es la regla."
+};
+
+const UI = {
+  en: {
+    langToggle: "Español", adminToggle: "Facilitator Report", backToTraining: "Back to Training",
+    back: "← Back", readMore: "Read more →",
+    courseTitle: "De-Escalation Training",
+    welcomeIntro1: "A self-paced course covering why de-escalation matters, cultural humility, recognizing escalation, core skills, and safety & boundaries. Facilitated by Stavros E. Delardas, LCSW, PMH-C, CLC, Manager, Maternal & Child Health Operations.",
+    welcomeIntro2Prefix: "You'll take a short pre-test, work through the lesson, with \"Try It\" scenarios along the way, then a post-test. A passing score of ",
+    welcomeIntro2Suffix: "% or higher on the post-test completes the course.",
+    aboutFacilitator: "About the Facilitator", aboutFacilitatorBody: "Stavros E. Delardas, LCSW, PMH-C, CLC",
+    aboutFacilitatorRole: "Manager, Maternal & Child Health Operations.",
+    aboutChcr: "About CHCR", aboutChcrBody: "Our mission is to sustain a vibrant, healthy, and strong community through affordable, culturally competent, quality primary health care.",
+    yourName: "Your name", yourEmail: "Your email",
+    beginPretest: "Begin Pre-Test", devSkip: "Dev: skip sign-in & pre-test",
+    facilitatorKicker: "About the Facilitator",
+    facilitatorRoleLine: "LCSW, PMH-C, CLC · Manager, Maternal & Child Health Operations",
+    facilitatorBio1: "Stavros Efstratios Delardas is a Licensed Clinical Social Worker who has been with the Community Health Center of Richmond since 2014. As Manager of Maternal & Child Health Operations, he oversees the Perinatal & Infant Community Health Collaborative (PICHC) and CHCR's Behavioral Health department, and serves as Chairman of the Workplace Safety & Infection Control Committee.",
+    facilitatorBio2: "He earned his Master of Social Work from Sacred Heart University and his B.S. in Human Services from Empire State College, holds LCSW licensure in New York & New Jersey, is a trained Birth Doula, and maintains certifications in Perinatal Mental Health & Lactation Counseling.",
+    aboutChcrKicker: "About CHCR", chcrOrgName: "Community Health Center of Richmond", chcrTagline: "Changing lives, daily.",
+    chcrMission: "Our mission is to sustain a vibrant, healthy, and strong community through affordable, culturally competent, quality primary health care. We aim to eliminate health disparities for underserved populations through accessibility, and empower people to take control of their physical and mental wellbeing through health education, prevention services, and wellness programs.",
+    neighborhoodKicker: "In your neighborhood",
+    neighborhoodBody: "Four locations across Staten Island, and more coming soon, providing primary and behavioral healthcare, dental, podiatry, and nutrition services, plus care for moms-to-be, nursing moms, infants, and young children.",
+    servicesKicker: "Services offered",
+    svcPrimaryTitle: "Primary Care", svcPrimaryBody: "Everyday health care for the whole family, from checkups to ongoing conditions.",
+    svcPediTitle: "Pediatrics", svcPediBody: "Care for infants, children, and teens as they grow.",
+    svcWomensTitle: "Women's Health", svcWomensBody: "Care for women at every stage of life, including pregnancy.",
+    svcBehavioralTitle: "Behavioral Health", svcBehavioralBody: "Support for mental health and emotional wellbeing.",
+    svcDentalTitle: "Dentistry", svcDentalBody: "Oral health care for patients of all ages.",
+    svcNutritionTitle: "Nutrition", svcNutritionBody: "Guidance for eating well and managing diet-related conditions.",
+    svcPodiatryTitle: "Podiatry", svcPodiatryBody: "Care for foot and ankle health.",
+    svcSupportTitle: "Supportive Programming", svcSupportBody: "Maternal and child health programs, insurance navigation, clinical case management.",
+    chcrFooter: "CHCR is a Health Center Program Grantee under 42 U.S.C. 254B and a deemed Public Health Service Employee under 42 U.S.C. 233(g)-(n). Learn more at",
+    referencesKicker: "Sources", referencesTitle: "References",
+    referencesIntro: "Materials and organizations this training drew on, in addition to Stavros's own clinical experience.",
+    academicKicker: "Academic & Clinical Sources",
+    beforeBegin: "Before you begin", pretestTitle: "Pre-Test",
+    pretestIntro: "Answer these 10 questions based on what you already know. There's no penalty, this just gives a baseline to compare against your post-test.",
+    questionOf: "Question", of10: "of 10", submitPretest: "Submit Pre-Test & Start Lesson",
+    finalCheck: "Final check", posttestTitle: "Post-Test",
+    posttestIntroPrefix: "Same 10 questions. A score of ", posttestIntroSuffix: "% or higher completes the course.",
+    submitPosttest: "Submit Post-Test",
+    back_: "Back", next: "Next", continueToPosttest: "Continue to Post-Test",
+    practiceKicker: "Practice · Say This, Not That",
+    gameTitle: "Which response helps de-escalate?",
+    gameInstructionsSuffix: "into \"Say This\" or \"Not That.\"",
+    sayThis: "Say This", notThat: "Not That",
+    dragHint: "Drag a statement into a category above:",
+    dropHere: "Drop statements here",
+    allSorted: "All statements sorted, check your results below.",
+    scoreLabel: "Score:",
+    gameCompleteMsg: "Great job! You've sorted all the statements. Ready to continue?",
+    tryIt: "Try It", applyWhatYouLearned: "Apply What You've Learned",
+    videoComingSoon: "Video coming soon", videoComingSoonSub: "Dana & Sam scenario clip, drop in once generated",
+    scenarioKicker: "Scenario",
+  },
+  es: {
+    langToggle: "English", adminToggle: "Informe del Facilitador", backToTraining: "Volver a la Capacitación",
+    back: "← Atrás", readMore: "Leer más →",
+    courseTitle: "Capacitación en Desescalada",
+    welcomeIntro1: "Un curso de ritmo propio que cubre por qué es importante la desescalada, la humildad cultural, cómo reconocer la escalada, habilidades clave y seguridad y límites. Facilitado por Stavros E. Delardas, LCSW, PMH-C, CLC, Gerente de Operaciones de Salud Materna e Infantil.",
+    welcomeIntro2Prefix: "Tomará una breve prueba inicial, trabajará en la lección (con escenarios de \"Practícalo\" a lo largo del camino) y luego una prueba final. Un puntaje de aprobación del ",
+    welcomeIntro2Suffix: "% o más en la prueba final completa el curso.",
+    aboutFacilitator: "Sobre el Facilitador", aboutFacilitatorBody: "Stavros E. Delardas, LCSW, PMH-C, CLC",
+    aboutFacilitatorRole: "Gerente de Operaciones de Salud Materna e Infantil.",
+    aboutChcr: "Sobre CHCR", aboutChcrBody: "Nuestra misión es sostener una comunidad vibrante, saludable y fuerte mediante atención primaria de salud accesible, culturalmente competente y de calidad.",
+    yourName: "Su nombre", yourEmail: "Su correo electrónico",
+    beginPretest: "Comenzar Prueba Inicial", devSkip: "Dev: omitir inicio de sesión y prueba inicial",
+    facilitatorKicker: "Sobre el Facilitador",
+    facilitatorRoleLine: "LCSW, PMH-C, CLC · Gerente de Operaciones de Salud Materna e Infantil",
+    facilitatorBio1: "Stavros Efstratios Delardas es un Trabajador Social Clínico con Licencia que forma parte del Community Health Center of Richmond desde 2014. Como Gerente de Operaciones de Salud Materna e Infantil, supervisa la Colaborativa Perinatal e Infantil de Salud Comunitaria (PICHC) y el departamento de Salud Conductual de CHCR, y se desempeña como Presidente del Comité de Seguridad Laboral y Control de Infecciones.",
+    facilitatorBio2: "Obtuvo su Maestría en Trabajo Social de Sacred Heart University y su licenciatura en Servicios Humanos de Empire State College, posee licencia de LCSW en Nueva York y Nueva Jersey, es doula de parto certificada, y mantiene certificaciones en Salud Mental Perinatal y Asesoría en Lactancia.",
+    aboutChcrKicker: "Sobre CHCR", chcrOrgName: "Community Health Center of Richmond", chcrTagline: "Cambiando vidas, cada día.",
+    chcrMission: "Nuestra misión es sostener una comunidad vibrante, saludable y fuerte mediante atención primaria de salud accesible, culturalmente competente y de calidad. Buscamos eliminar las disparidades de salud para poblaciones desatendidas mediante la accesibilidad, y empoderar a las personas para que tomen el control de su bienestar físico y mental a través de educación en salud, servicios de prevención y programas de bienestar.",
+    neighborhoodKicker: "En su vecindario",
+    neighborhoodBody: "Cuatro sedes en Staten Island, y más próximamente, que ofrecen atención primaria y conductual, servicios dentales, de podología y nutrición, además de atención para futuras madres, madres lactantes, bebés y niños pequeños.",
+    servicesKicker: "Servicios ofrecidos",
+    svcPrimaryTitle: "Atención Primaria", svcPrimaryBody: "Atención médica cotidiana para toda la familia, desde chequeos hasta condiciones continuas.",
+    svcPediTitle: "Pediatría", svcPediBody: "Atención para bebés, niños y adolescentes a medida que crecen.",
+    svcWomensTitle: "Salud de la Mujer", svcWomensBody: "Atención para mujeres en cada etapa de la vida, incluido el embarazo.",
+    svcBehavioralTitle: "Salud Conductual", svcBehavioralBody: "Apoyo para la salud mental y el bienestar emocional.",
+    svcDentalTitle: "Odontología", svcDentalBody: "Atención de salud bucal para pacientes de todas las edades.",
+    svcNutritionTitle: "Nutrición", svcNutritionBody: "Orientación para una alimentación saludable y el manejo de condiciones relacionadas con la dieta.",
+    svcPodiatryTitle: "Podología", svcPodiatryBody: "Atención para la salud del pie y el tobillo.",
+    svcSupportTitle: "Programas de Apoyo", svcSupportBody: "Programas de salud materna e infantil, orientación sobre seguros y manejo clínico de casos.",
+    chcrFooter: "CHCR es un Beneficiario del Programa de Centros de Salud bajo 42 U.S.C. 254B y un Empleado del Servicio de Salud Pública designado bajo 42 U.S.C. 233(g)-(n). Más información en",
+    referencesKicker: "Fuentes", referencesTitle: "Referencias",
+    referencesIntro: "Materiales y organizaciones en los que se basó esta capacitación, además de la propia experiencia clínica de Stavros.",
+    academicKicker: "Fuentes Académicas y Clínicas",
+    beforeBegin: "Antes de comenzar", pretestTitle: "Prueba Inicial",
+    pretestIntro: "Responda estas 10 preguntas según lo que ya sabe. No hay penalización; esto solo establece una base para comparar con su prueba final.",
+    questionOf: "Pregunta", of10: "de 10", submitPretest: "Enviar Prueba Inicial y Comenzar la Lección",
+    finalCheck: "Verificación final", posttestTitle: "Prueba Final",
+    posttestIntroPrefix: "Las mismas 10 preguntas. Un puntaje del ", posttestIntroSuffix: "% o más completa el curso.",
+    submitPosttest: "Enviar Prueba Final",
+    back_: "Atrás", next: "Siguiente", continueToPosttest: "Continuar a la Prueba Final",
+    practiceKicker: "Práctica · Dilo Así, No Así",
+    gameTitle: "¿Qué respuesta ayuda a desescalar?",
+    gameInstructionsSuffix: "en \"Dilo Así\" o \"Así No.\"",
+    sayThis: "Dilo Así", notThat: "Así No",
+    dragHint: "Arrastre una frase a una categoría arriba:",
+    dropHere: "Suelte las frases aquí",
+    allSorted: "Todas las frases clasificadas, revise sus resultados abajo.",
+    scoreLabel: "Puntaje:",
+    gameCompleteMsg: "¡Buen trabajo! Ha clasificado todas las frases. ¿Listo para continuar?",
+    tryIt: "Practícalo", applyWhatYouLearned: "Aplique lo que Aprendió",
+    videoComingSoon: "Video próximamente", videoComingSoonSub: "Clip del escenario de Dana y Sam, se agregará una vez generado",
+    scenarioKicker: "Escenario",
+  }
+};
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function makeId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+
+class Component extends DCLogic {
+  state = {
+    screen: "welcome",
+    prevScreen: "welcome",
+    learnerName: "",
+    learnerEmail: "",
+    sessionId: null,
+    pretestAnswers: Array(10).fill(null),
+    posttestAnswers: Array(10).fill(null),
+    preScore: null,
+    postScore: null,
+    lessonIndex: 0,
+    scenarioChoices: {},
+    gameAssignments: {},
+    gameDraggingId: null,
+    gameDragOverCat: null,
+    language: "en",
+    attempts: [],
+    adminUnlocked: false,
+    adminPasscodeInput: "",
+    adminError: false
+  };
+
+  componentDidMount() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) this.setState({ attempts: JSON.parse(raw) });
+    } catch (e) {}
+  }
+
+  toggleLanguage = () => this.setState((s) => ({ language: s.language === "en" ? "es" : "en" }));
+
+  onNameChange = (e) => this.setState({ learnerName: e.target.value });
+  onEmailChange = (e) => this.setState({ learnerEmail: e.target.value });
+
+  goFacilitatorPage = () => this.setState({ screen: "facilitator" });
+  goAboutChcrPage = () => this.setState({ screen: "about-chcr" });
+  goReferencesPage = () => this.setState({ screen: "references" });
+  backToWelcome = () => this.setState({ screen: "welcome" });
+
+  beginTraining = () => {
+    this.setState({ screen: "pretest", sessionId: makeId() });
+  };
+
+  devSkipToLesson = () => {
+    this.setState({
+      screen: "lesson", lessonIndex: 0, sessionId: makeId(),
+      learnerName: this.state.learnerName || "Dev Preview",
+      learnerEmail: this.state.learnerEmail || "dev@example.com",
+      preScore: this.score(this.state.pretestAnswers),
+    });
+  };
+
+  selectAnswer = (which, qi, oi) => {
+    this.setState((s) => {
+      const arr = s[which].slice();
+      arr[qi] = oi;
+      return { [which]: arr };
+    });
+  };
+
+  score = (answers) => answers.reduce((sum, a, i) => sum + (a === QUESTIONS[i].correct ? 1 : 0), 0);
+
+  submitPretest = () => {
+    this.setState({ preScore: this.score(this.state.pretestAnswers), screen: "lesson", lessonIndex: 0 });
+  };
+
+  prevLesson = () => this.setState((s) => ({ lessonIndex: Math.max(0, s.lessonIndex - 1) }));
+  nextLesson = () => {
+    if (this.state.lessonIndex >= STEPS.length - 1) {
+      this.setState({ screen: "posttest" });
+    } else {
+      this.setState((s) => ({ lessonIndex: s.lessonIndex + 1 }));
+    }
+  };
+
+  selectScenario = (id, idx) => this.setState((s) => ({ scenarioChoices: { ...s.scenarioChoices, [id]: idx } }));
+
+  assignStatementToCategory = (statementId, categoryId) => {
+    this.setState((s) => ({
+      gameAssignments: { ...s.gameAssignments, [statementId]: categoryId },
+      gameDraggingId: null,
+      gameDragOverCat: null
+    }));
+  };
+
+  unassignStatement = (statementId) => {
+    this.setState((s) => {
+      const next = { ...s.gameAssignments };
+      delete next[statementId];
+      return { gameAssignments: next };
+    });
+  };
+
+  onGameDragStart = (statementId) => (e) => {
+    this.setState({ gameDraggingId: statementId });
+    if (e.dataTransfer) { e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", statementId); }
+  };
+
+  onGameDragEnd = () => this.setState({ gameDraggingId: null, gameDragOverCat: null });
+
+  onGameDragOverCat = (catId) => (e) => {
+    e.preventDefault();
+    if (this.state.gameDragOverCat !== catId) this.setState({ gameDragOverCat: catId });
+  };
+
+  onGameDragLeaveCat = (catId) => () => {
+    this.setState((s) => (s.gameDragOverCat === catId ? { gameDragOverCat: null } : null));
+  };
+
+  onGameDropCat = (catId) => (e) => {
+    e.preventDefault();
+    const id = this.state.gameDraggingId || (e.dataTransfer && e.dataTransfer.getData("text/plain"));
+    if (id) this.assignStatementToCategory(id, catId);
+  };
+
+  isGameComplete = () => {
+    return SAY_THIS_NOT_THAT_GAME.statements.every(stmt => this.state.gameAssignments[stmt.id]);
+  };
+
+  getGameScore = () => {
+    let correct = 0;
+    SAY_THIS_NOT_THAT_GAME.statements.forEach(stmt => {
+      if (this.state.gameAssignments[stmt.id] === stmt.category) {
+        correct++;
+      }
+    });
+    return correct;
+  };
+
+  upsertAttempt = (postScore) => {
+    const s = this.state;
+    const passed = (postScore / QUESTIONS.length) * 100 >= PASSING_SCORE;
+    const record = {
+      sessionId: s.sessionId,
+      name: s.learnerName || "(no name)",
+      email: s.learnerEmail || "(no email)",
+      date: new Date().toLocaleString(),
+      preScore: s.preScore,
+      postScore,
+      total: QUESTIONS.length,
+      passed
+    };
+    const attempts = s.attempts.filter((a) => a.sessionId !== s.sessionId);
+    attempts.push(record);
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(attempts)); } catch (e) {}
+    this.setState({ attempts, postScore });
+  };
+
+  submitPosttest = () => {
+    const postScore = this.score(this.state.posttestAnswers);
+    this.upsertAttempt(postScore);
+    this.setState({ screen: "results" });
+  };
+
+  retakePosttest = () => this.setState({ screen: "posttest", posttestAnswers: Array(10).fill(null) });
+
+  startOver = () => this.setState({
+    screen: "welcome", learnerName: "", learnerEmail: "", sessionId: null,
+    pretestAnswers: Array(10).fill(null), posttestAnswers: Array(10).fill(null),
+    preScore: null, postScore: null, lessonIndex: 0, scenarioChoices: {}
+  });
+
+  toggleAdmin = () => this.setState((s) => {
+    if (s.screen === "admin" || s.screen === "admin-gate") return { screen: s.prevScreen };
+    if (s.adminUnlocked) return { screen: "admin", prevScreen: s.screen };
+    return { screen: "admin-gate", prevScreen: s.screen, adminPasscodeInput: "", adminError: false };
+  });
+
+  onAdminPasscodeChange = (e) => this.setState({ adminPasscodeInput: e.target.value, adminError: false });
+
+  submitAdminPasscode = () => {
+    if (this.state.adminPasscodeInput === ADMIN_PASSCODE) {
+      this.setState({ adminUnlocked: true, screen: "admin", adminError: false });
+    } else {
+      this.setState({ adminError: true });
+    }
+  };
+
+  cancelAdminGate = () => this.setState((s) => ({ screen: s.prevScreen }));
+
+  exportCSV = () => {
+    const rows = [["Name", "Email", "Date", "Pre-Test", "Post-Test", "Result"]];
+    this.state.attempts.forEach((a) => rows.push([a.name, a.email, a.date, `${a.preScore}/10`, `${a.postScore}/10`, a.passed ? "Passed" : "Not Passed"]));
+    const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "de-escalation-completions.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  buildQuizView(which) {
+    const answers = this.state[which];
+    const src = this.state.language === "es" ? QUESTIONS_ES : QUESTIONS;
+    return src.map((q, qi) => ({
+      num: qi + 1,
+      text: q.text,
+      options: q.options.map((text, oi) => ({
+        text,
+        selected: answers[qi] === oi,
+        onSelect: () => this.selectAnswer(which, qi, oi)
+      }))
+    }));
+  }
+
+  buildScenario(id) {
+    const def = this.state.language === "es" ? SCENARIO_BANK_ES[id] : SCENARIO_BANK[id];
+    const chosen = this.state.scenarioChoices[id];
+    return {
+      prompt: def.prompt,
+      video: def.video,
+      narrative: def.narrative,
+      options: def.options.map((o, i) => ({
+        text: o.text,
+        btnClass: chosen === i ? (o.correct ? "btn-primary" : "btn-secondary") : "btn-secondary",
+        onSelect: () => this.selectScenario(id, i)
+      })),
+      feedback: chosen !== undefined ? def.options[chosen].feedback : ""
+    };
+  }
+
+  buildGameView() {
+    const game = SAY_THIS_NOT_THAT_GAME;
+    const isEs = this.state.language === "es";
+    const textFor = (s) => isEs ? GAME_TEXT_ES[s.id] : s.text;
+    if (!this._gameOrder) this._gameOrder = shuffle(game.statements.map(s => s.id));
+    const order = this._gameOrder;
+    const unassigned = order
+      .filter(id => !this.state.gameAssignments[id])
+      .map(id => game.statements.find(s => s.id === id));
+    const ui = UI[this.state.language];
+    const categories = game.categories.map(cat => ({
+      id: cat.id,
+      label: cat.id === "say" ? ui.sayThis : ui.notThat,
+      varColor: cat.varColor,
+      bg: cat.bg,
+      dropBorderColor: this.state.gameDragOverCat === cat.id ? cat.varColor : "transparent",
+      onDragOver: this.onGameDragOverCat(cat.id),
+      onDragLeave: this.onGameDragLeaveCat(cat.id),
+      onDrop: this.onGameDropCat(cat.id),
+      items: game.statements
+        .filter(s => this.state.gameAssignments[s.id] === cat.id)
+        .map(s => ({
+          id: s.id,
+          text: textFor(s),
+          isCorrect: s.category === cat.id,
+          onRemove: () => this.unassignStatement(s.id)
+        }))
+    }));
+    return {
+      instructions: game.instructions,
+      unassigned: unassigned.map(s => ({
+        id: s.id,
+        text: textFor(s),
+        dragOpacity: this.state.gameDraggingId === s.id ? 0.4 : 1,
+        onDragStart: this.onGameDragStart(s.id),
+        onDragEnd: this.onGameDragEnd
+      })),
+      categories,
+      isComplete: this.isGameComplete(),
+      score: this.getGameScore(),
+      total: game.statements.length
+    };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const isWelcome = s.screen === "welcome";
+    const isPretest = s.screen === "pretest";
+    const isLesson = s.screen === "lesson";
+    const isPosttest = s.screen === "posttest";
+    const isResults = s.screen === "results";
+    const isAdmin = s.screen === "admin";
+    const isAdminGate = s.screen === "admin-gate";
+    const isFacilitatorPage = s.screen === "facilitator";
+    const isAboutChcrPage = s.screen === "about-chcr";
+    const isReferencesPage = s.screen === "references";
+
+    const currentStep = STEPS[s.lessonIndex];
+    const contentSteps = STEPS.filter((st) => st.kind === "content");
+    const contentNumber = currentStep && currentStep.kind === "content" ? contentSteps.indexOf(currentStep) + 1 : null;
+    const uiEarly = UI[s.language];
+    const sectionWord = s.language === "es" ? "Sección" : "Section";
+    const ofWord = s.language === "es" ? "de" : "of";
+    const coreSkillWord = s.language === "es" ? "Habilidad Clave" : "Core Skill";
+    const RELATED_ES = {
+      "Before We Respond": "Antes de Responder", "Cultural Humility": "Humildad Cultural",
+      "Common Triggers": "Desencadenantes Comunes", "Early Warning Signs": "Señales Tempranas de Advertencia",
+      "Unintentional Escalation": "Escalada Involuntaria", "Stay Calm & Controlled": "Mantener la Calma y el Control",
+      "Show Respect & Empathy": "Mostrar Respeto y Empatía", "Simple & Clear Communication": "Comunicación Simple y Clara",
+      "Maintain a Safe Space": "Mantener un Espacio Seguro", "Offer Choices": "Ofrecer Opciones",
+      "Non-Verbal Awareness": "Conciencia No Verbal", "Safety & Boundaries": "Seguridad y Límites"
+    };
+    const relatedLabel = currentStep && currentStep.related ? (s.language === "es" ? (RELATED_ES[currentStep.related] || currentStep.related) : currentStep.related) : null;
+    const stepLabel = isPretest ? uiEarly.pretestTitle : isLesson
+      ? (currentStep.kind === "content" ? `${sectionWord} ${contentNumber} ${ofWord} 21` : currentStep.kind === "practice" ? uiEarly.practiceKicker : `${uiEarly.tryIt} · ${relatedLabel}`)
+      : isPosttest ? uiEarly.posttestTitle : "";
+    const stepPct = isPretest ? 8 : isLesson ? Math.round(((s.lessonIndex + 1) / STEPS.length) * 80) + 8 : isPosttest ? 96 : 0;
+
+    const pretestAnswered = s.pretestAnswers.filter((a) => a !== null).length;
+    const posttestAnswered = s.posttestAnswers.filter((a) => a !== null).length;
+
+    const passed = s.postScore !== null && (s.postScore / QUESTIONS.length) * 100 >= PASSING_SCORE;
+
+    const attemptsView = s.attempts.slice().reverse().map((a) => ({
+      name: a.name, email: a.email, date: a.date,
+      pre: `${a.preScore}/10`, post: `${a.postScore}/10`,
+      status: a.passed ? "Passed" : "Not Passed",
+      tagClass: a.passed ? "tag tag-accent-2" : "tag tag-outline"
+    }));
+
+    const RHYTHM = {
+      cozy: { s2: "6px", s3: "10px", s4: "14px", s6: "20px", s8: "26px" },
+      balanced: { s2: "8.8px", s3: "13.2px", s4: "17.6px", s6: "26.4px", s8: "35.2px" },
+      airy: { s2: "12px", s3: "20px", s4: "28px", s6: "42px", s8: "56px" }
+    };
+    const FRAME = {
+      soft: { md: "16px", lg: "28px", sm: "0 1px 2px rgba(20,20,20,.10)", md2: "0 3px 10px rgba(20,20,20,.12)", lg2: "0 12px 32px rgba(20,20,20,.16)", badge: "999px" },
+      structured: { md: "8px", lg: "10px", sm: "none", md2: "0 1px 3px rgba(20,20,20,.14)", lg2: "0 2px 8px rgba(20,20,20,.16)", badge: "10px" },
+      bold: { md: "16px", lg: "20px", sm: "0 2px 4px rgba(20,20,20,.20)", md2: "0 6px 18px rgba(20,20,20,.24)", lg2: "0 18px 44px rgba(20,20,20,.30)", badge: "999px" }
+    };
+    const rhythm = RHYTHM[this.props.rhythm] || RHYTHM.balanced;
+    const frame = FRAME[this.props.frame] || FRAME.soft;
+    const themeVarsStyle = `--space-2:${rhythm.s2}; --space-3:${rhythm.s3}; --space-4:${rhythm.s4}; --space-6:${rhythm.s6}; --space-8:${rhythm.s8}; --radius-md:${frame.md}; --radius-lg:${frame.lg}; --shadow-sm:${frame.sm}; --shadow-md:${frame.md2}; --shadow-lg:${frame.lg2}; --badge-radius:${frame.badge};`;
+    const badgeMode = this.props.sectionMarkers === "minimal" ? "minimal" : "numbered";
+
+    const isScenarioPage = isLesson && currentStep && currentStep.kind === "scenario";
+    const currentScenario = isScenarioPage ? { ...this.buildScenario(currentStep.id), related: relatedLabel, noVideo: !SCENARIO_BANK[currentStep.id].video && !SCENARIO_BANK[currentStep.id].narrative } : null;
+    const ui = UI[s.language];
+    const isSpanish = s.language === "es";
+
+    const isGamePage = isLesson && currentStep && currentStep.kind === "practice";
+    const currentGame = isGamePage ? this.buildGameView() : null;
+
+    return {
+      themeVarsStyle, badgeMode, ui, isSpanish, ofWord, sectionWord, coreSkillWord,
+      toggleLanguage: this.toggleLanguage,
+      isWelcome, isPretest, isLesson, isPosttest, isResults, isAdmin,
+      isProgressVisible: isPretest || isLesson || isPosttest,
+      stepLabel, stepPct, stepPctStyle: stepPct + "%",
+      adminToggleLabel: (isAdmin || isAdminGate) ? ui.backToTraining : ui.adminToggle,
+      isAdminGate,
+      adminPasscodeInput: s.adminPasscodeInput,
+      onAdminPasscodeChange: this.onAdminPasscodeChange,
+      submitAdminPasscode: this.submitAdminPasscode,
+      cancelAdminGate: this.cancelAdminGate,
+      adminError: s.adminError,
+
+      learnerName: s.learnerName, learnerEmail: s.learnerEmail,
+      onNameChange: this.onNameChange, onEmailChange: this.onEmailChange,
+      cannotBegin: !(s.learnerName.trim() && s.learnerEmail.trim()),
+      beginTraining: this.beginTraining,
+      devSkipToLesson: this.devSkipToLesson,
+      passingScoreLabel: PASSING_SCORE,
+      goFacilitatorPage: this.goFacilitatorPage,
+      goAboutChcrPage: this.goAboutChcrPage,
+      goReferencesPage: this.goReferencesPage,
+      backToWelcome: this.backToWelcome,
+      isFacilitatorPage,
+      isAboutChcrPage,
+      isReferencesPage,
+
+      pretestView: this.buildQuizView("pretestAnswers"),
+      pretestIncomplete: pretestAnswered < QUESTIONS.length,
+      submitPretest: this.submitPretest,
+
+      posttestView: this.buildQuizView("posttestAnswers"),
+      posttestIncomplete: posttestAnswered < QUESTIONS.length,
+      submitPosttest: this.submitPosttest,
+
+      isSection0: currentStep && currentStep.kind === "content" && currentStep.idx === 0,
+      isSection1: currentStep && currentStep.kind === "content" && currentStep.idx === 1,
+      isSection2: currentStep && currentStep.kind === "content" && currentStep.idx === 2,
+      isSection2b: currentStep && currentStep.kind === "content" && currentStep.idx === 2.1,
+      isSection2c: currentStep && currentStep.kind === "content" && currentStep.idx === 2.2,
+      isSection3: currentStep && currentStep.kind === "content" && currentStep.idx === 3,
+      isSection4: currentStep && currentStep.kind === "content" && currentStep.idx === 4,
+      isSection5: currentStep && currentStep.kind === "content" && currentStep.idx === 5,
+      isSection6: currentStep && currentStep.kind === "content" && currentStep.idx === 6,
+      isSection7: currentStep && currentStep.kind === "content" && currentStep.idx === 7,
+      isSection8: currentStep && currentStep.kind === "content" && currentStep.idx === 8,
+      isSection9: currentStep && currentStep.kind === "content" && currentStep.idx === 9,
+      isSection10: currentStep && currentStep.kind === "content" && currentStep.idx === 10,
+      isSection11: currentStep && currentStep.kind === "content" && currentStep.idx === 11,
+      isSection12: currentStep && currentStep.kind === "content" && currentStep.idx === 12,
+      isSection13: currentStep && currentStep.kind === "content" && currentStep.idx === 13,
+      isSection13b: currentStep && currentStep.kind === "content" && currentStep.idx === 13.1,
+      isSection14: currentStep && currentStep.kind === "content" && currentStep.idx === 14,
+      isSection15: currentStep && currentStep.kind === "content" && currentStep.idx === 15,
+      isSection16: currentStep && currentStep.kind === "content" && currentStep.idx === 16,
+      isSection17: currentStep && currentStep.kind === "content" && currentStep.idx === 17,
+      isScenarioPage,
+      isGamePage,
+      isFirstSection: s.lessonIndex === 0,
+      nextLessonLabel: s.lessonIndex >= STEPS.length - 1 ? ui.continueToPosttest : ui.next,
+      prevLesson: this.prevLesson, nextLesson: this.nextLesson,
+
+      currentScenario,
+      currentGame,
+
+      resultTagClass: passed ? "tag tag-accent-2" : "tag tag-outline",
+      resultLabel: passed ? "Course Complete" : "Not Yet Passed",
+      resultDate: new Date().toLocaleDateString(),
+      preScoreLabel: s.preScore !== null ? `${s.preScore}/10` : "—",
+      postScoreLabel: s.postScore !== null ? `${s.postScore}/10` : "—",
+      resultMessage: passed
+        ? "You've met the passing score and completed this year's de-escalation training. Thank you."
+        : `A score of ${PASSING_SCORE}% or higher is needed to complete the course. Review the lesson sections as needed, then retake the post-test.`,
+      showRetake: !passed,
+      retakePosttest: this.retakePosttest,
+      startOver: this.startOver,
+
+      toggleAdmin: this.toggleAdmin,
+      hasAttempts: s.attempts.length > 0,
+      noAttempts: s.attempts.length === 0,
+      attemptsView,
+      exportCSV: this.exportCSV
+    };
+  }
+}
+
+</script>
+</body>
+</html>
