@@ -30,6 +30,13 @@ recreated pixel-close using the CHCR brand tokens from the prototype's `<style>`
    (`src/app/api/facilitator/login/route.ts`), and a successful login sets a signed, httpOnly,
    expiring session cookie (`src/lib/facilitatorSession.ts`) that gates the completions-list
    endpoint. The passcode itself is never sent to the browser.
+4. **Assign the training to people.** The facilitator dashboard has an "Assign Training" form —
+   paste a list of names/emails and each person gets emailed a link (via Resend,
+   `src/lib/resend.ts`), recorded in a Supabase `assignments` table
+   (`src/app/api/assignments/route.ts`). A daily Vercel Cron job
+   (`src/app/api/cron/send-reminders/route.ts`, scheduled in `vercel.json`) checks who hasn't
+   passed yet and sends a reminder every few days, capped at 5 reminders per person, then stops
+   automatically once a passing completion shows up for that email.
 
 The six section photos and the welcome hero image are the ones dropped into the prototype's image
 slots (`public/photos/`); swap them for updated CHCR photos any time by replacing those files.
@@ -39,9 +46,9 @@ slots (`public/photos/`); swap them for updated CHCR photos any time by replacin
 ### 1. Supabase
 
 Create a project, then run `supabase/schema.sql` in the SQL editor (or via the CLI). It creates the
-`completions` table with row-level security enabled and **no policies** — on purpose. Only the
-service role key (server-only, see below) can read or write it; the anon/public key gets zero
-access even if it were ever exposed.
+`completions` and `assignments` tables with row-level security enabled and **no policies** — on
+purpose. Only the service role key (server-only, see below) can read or write them; the anon/public
+key gets zero access even if it were ever exposed.
 
 ### 2. Environment variables
 
@@ -60,8 +67,24 @@ fill in:
   sidesteps the whole class of problem.
 - `SESSION_SECRET` — random string used to sign the facilitator session cookie. Generate with
   `openssl rand -base64 32`.
+- `RESEND_API_KEY` — from [resend.com](https://resend.com) (free tier is fine). Powers the
+  assignment/reminder emails.
+- `RESEND_FROM_EMAIL` — optional; defaults to Resend's shared `onboarding@resend.dev` sender, which
+  works without any setup but is best replaced with your own verified domain later.
+- `APP_URL` — the deployed app's URL (no trailing slash), used as the link in emails, e.g.
+  `https://de-escalation-training.vercel.app`.
+- `CRON_SECRET` — random string, `openssl rand -base64 32`. Set it in Vercel and Vercel
+  automatically sends it as the `Authorization` header when it triggers the reminder cron — no
+  other wiring needed.
 
-### 3. Run it
+### 3. Vercel Cron (reminders)
+
+`vercel.json` already declares a daily cron hitting `/api/cron/send-reminders` — Vercel picks this
+up automatically on deploy as long as `CRON_SECRET` is set. Nothing else to configure. (Vercel's
+Hobby plan runs cron jobs at most once/day, which is why the reminder cadence is checked in code —
+"has it been ≥3 days" — rather than relied on from the schedule itself.)
+
+### 4. Run it
 
 ```bash
 npm install
@@ -77,9 +100,10 @@ individual facilitator accounts if that stops being sufficient.
 
 ## Deploying
 
-Push to a Git repo and import it into Vercel, or run `vercel` from this directory. Set the same
-three environment variables in the Vercel project settings (Production and Preview). No other
-config needed — the API routes are ordinary Next.js route handlers.
+Push to a Git repo and import it into Vercel, or run `vercel` from this directory. Set all seven
+environment variables in the Vercel project settings (Production and Preview). No other config
+needed — the API routes are ordinary Next.js route handlers, and the cron schedule in `vercel.json`
+is picked up automatically.
 
 ## Project structure
 
@@ -94,6 +118,11 @@ config needed — the API routes are ordinary Next.js route handlers.
 - `src/app/api/facilitator/{login,logout}/route.ts` — facilitator session endpoints.
 - `src/lib/facilitatorSession.ts` — signed session cookie helper.
 - `src/lib/supabaseAdmin.ts` — server-only Supabase client (service role key).
-- `supabase/schema.sql` — the `completions` table.
+- `src/app/api/assignments/route.ts` — POST creates assignments + sends the initial email; GET
+  lists them (both facilitator-session gated).
+- `src/app/api/cron/send-reminders/route.ts` — daily job (see `vercel.json`) that marks assignments
+  complete and sends reminder emails.
+- `src/lib/resend.ts` — email sending + templates for the assignment/reminder emails.
+- `supabase/schema.sql` — the `completions` and `assignments` tables.
 - `design_handoff_deescalation_training/` — the original Claude Design handoff bundle (chat
   transcripts + the `.dc.html` prototype) this app was built from.
