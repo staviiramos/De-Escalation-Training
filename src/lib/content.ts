@@ -452,6 +452,7 @@ export interface UiStrings {
   dragHint: string; dropHere: string; allSorted: string; scoreLabel: string; gameCompleteMsg: string;
   tryIt: string; applyWhatYouLearned: string;
   videoComingSoon: string; videoComingSoonSub: string; scenarioKicker: string;
+  readAloud: string; stopReading: string;
 }
 
 export const UI: Record<Language, UiStrings> = {
@@ -508,6 +509,7 @@ export const UI: Record<Language, UiStrings> = {
     tryIt: "Try It", applyWhatYouLearned: "Apply What You've Learned",
     videoComingSoon: "Video coming soon", videoComingSoonSub: "Dana & Sam scenario clip, drop in once generated",
     scenarioKicker: "Scenario",
+    readAloud: "Read aloud", stopReading: "Stop",
   },
   es: {
     langToggle: "English", adminToggle: "Informe del Facilitador", backToTraining: "Volver a la Capacitación",
@@ -562,6 +564,7 @@ export const UI: Record<Language, UiStrings> = {
     tryIt: "Practícalo", applyWhatYouLearned: "Aplique lo que Aprendió",
     videoComingSoon: "Video próximamente", videoComingSoonSub: "Clip del escenario de Dana y Sam, se agregará una vez generado",
     scenarioKicker: "Escenario",
+    readAloud: "Leer en voz alta", stopReading: "Detener",
   },
 };
 
