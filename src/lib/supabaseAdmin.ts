@@ -42,6 +42,36 @@ export interface Database {
         }>;
         Relationships: [];
       };
+      assignments: {
+        Row: {
+          id: string;
+          learner_name: string | null;
+          learner_email: string;
+          assigned_at: string;
+          last_reminded_at: string | null;
+          reminder_count: number;
+          completed_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          learner_name?: string | null;
+          learner_email: string;
+          assigned_at?: string;
+          last_reminded_at?: string | null;
+          reminder_count?: number;
+          completed_at?: string | null;
+        };
+        Update: Partial<{
+          id: string;
+          learner_name: string | null;
+          learner_email: string;
+          assigned_at: string;
+          last_reminded_at: string | null;
+          reminder_count: number;
+          completed_at: string | null;
+        }>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

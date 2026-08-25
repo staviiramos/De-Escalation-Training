@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { LessonSection } from "./LessonSections";
+import { useReadAloud } from "@/lib/speech";
 import {
   CONTENT_STEP_COUNT,
   GAME_TEXT_ES,
@@ -50,6 +51,16 @@ interface CompletionRecord {
   completedAt: string;
 }
 
+interface AssignmentRecord {
+  id: string;
+  name: string | null;
+  email: string;
+  assignedAt: string;
+  lastRemindedAt: string | null;
+  reminderCount: number;
+  completedAt: string | null;
+}
+
 const ARROW = (
   <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.75} strokeLinecap="round" strokeLinejoin="round">
     <path d="M5 12h14" />
@@ -85,6 +96,14 @@ export function TrainingApp() {
   const [facilitatorBusy, setFacilitatorBusy] = useState(false);
   const [completions, setCompletions] = useState<CompletionRecord[] | null>(null);
   const [completionsError, setCompletionsError] = useState("");
+
+  const [assignments, setAssignments] = useState<AssignmentRecord[] | null>(null);
+  const [assignText, setAssignText] = useState("");
+  const [assigning, setAssigning] = useState(false);
+  const [assignResult, setAssignResult] = useState<{ assigned: number; invalidLines: string[]; emailFailures: string[] } | { error: string } | null>(null);
+
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { supported: speechSupported, speaking, speak, stop: stopReading } = useReadAloud();
 
   const ui = UI[language];
   const isPretest = screen === "pretest";
@@ -137,10 +156,55 @@ export function TrainingApp() {
       .catch(() => {
         if (!cancelled) setCompletionsError("Could not load completion records.");
       });
+    loadAssignments();
     return () => {
       cancelled = true;
     };
   }, [screen]);
+
+  function loadAssignments() {
+    fetch("/api/assignments")
+      .then(async (res) => {
+        if (!res.ok) throw new Error("failed");
+        const data = await res.json();
+        setAssignments(data.assignments);
+      })
+      .catch(() => {
+        // Non-fatal — the completions table above is the primary view; leave
+        // assignments as null so that section shows its own quiet error state.
+      });
+  }
+
+  async function submitAssignments() {
+    setAssigning(true);
+    setAssignResult(null);
+    try {
+      const res = await fetch("/api/assignments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: assignText }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAssignResult({ error: data.error || "Could not send assignments." });
+        return;
+      }
+      setAssignResult(data);
+      setAssignText("");
+      loadAssignments();
+    } catch {
+      setAssignResult({ error: "Could not send assignments. Check your connection and try again." });
+    } finally {
+      setAssigning(false);
+    }
+  }
+
+  // Stop any in-progress read-aloud when the learner navigates to a different
+  // section, or away from the lesson screen entirely.
+  useEffect(() => {
+    return () => stopReading();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lessonIndex, screen]);
 
   function toggleLanguage() {
     setLanguage((l) => (l === "en" ? "es" : "en"));
@@ -346,14 +410,50 @@ export function TrainingApp() {
           {isLesson && currentStep && (
             <>
               {currentStep.kind === "content" && (
-                <LessonSection
-                  idx={currentStep.idx}
-                  number={contentNumber ?? 0}
-                  sectionWord={sectionWord}
-                  ofWord={ofWord}
-                  coreSkillWord={coreSkillWord}
-                  onGoReferences={() => setScreen("references")}
-                />
+                <>
+                  {speechSupported && (
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}>
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        onClick={() => {
+                          if (speaking) {
+                            stopReading();
+                          } else if (sectionRef.current) {
+                            const text = (sectionRef.current.textContent || "").replace(/\s+/g, " ").trim();
+                            if (text) speak(text);
+                          }
+                        }}
+                      >
+                        {speaking ? (
+                          <>
+                            <svg width={14} height={14} viewBox="0 0 24 24" fill="currentColor"><rect x={6} y={5} width={4} height={14} /><rect x={14} y={5} width={4} height={14} /></svg>
+                            {ui.stopReading}
+                          </>
+                        ) : (
+                          <>
+                            <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M11 5 6 9H2v6h4l5 4V5Z" />
+                              <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+                              <path d="M18.5 6a9 9 0 0 1 0 12" />
+                            </svg>
+                            {ui.readAloud}
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                  <div ref={sectionRef}>
+                    <LessonSection
+                      idx={currentStep.idx}
+                      number={contentNumber ?? 0}
+                      sectionWord={sectionWord}
+                      ofWord={ofWord}
+                      coreSkillWord={coreSkillWord}
+                      onGoReferences={() => setScreen("references")}
+                    />
+                  </div>
+                </>
               )}
               {currentStep.kind === "scenario" && (
                 <ScenarioView
@@ -505,6 +605,70 @@ export function TrainingApp() {
               {completions && completions.length === 0 && (
                 <div className="card">
                   <p className="card-body">No completions recorded yet.</p>
+                </div>
+              )}
+
+              <div style={{ fontFamily: "var(--font-heading)", fontSize: 22, margin: "var(--space-8) 0 var(--space-2)" }}>Assign Training</div>
+              <p style={{ opacity: 0.7, maxWidth: "65ch", marginBottom: "var(--space-4)" }}>
+                One name/email per line — either just an email, or <code>Name, email@example.com</code>.
+                Each person gets an email with a link to start now, then a reminder every few days
+                until they complete it.
+              </p>
+              <div className="field" style={{ marginBottom: "var(--space-3)" }}>
+                <label htmlFor="cq-assign-text">People to assign</label>
+                <textarea
+                  id="cq-assign-text"
+                  className="input"
+                  style={{ borderRadius: "var(--radius-lg)", minHeight: 120, resize: "vertical", fontFamily: "var(--font-body)" }}
+                  value={assignText}
+                  onChange={(e) => setAssignText(e.target.value)}
+                  placeholder={"Jane Doe, jane.doe@chcrichmond.org\njohn.smith@chcrichmond.org"}
+                />
+              </div>
+              <button type="button" className="btn btn-primary" disabled={assigning || !assignText.trim()} onClick={submitAssignments}>
+                {assigning ? "Sending…" : "Send Assignments"}
+              </button>
+              {assignResult && "error" in assignResult && (
+                <p style={{ color: "var(--color-accent-700)", fontSize: 13, marginTop: 8 }}>{assignResult.error}</p>
+              )}
+              {assignResult && "assigned" in assignResult && (
+                <p style={{ fontSize: 13, marginTop: 8, opacity: 0.85 }}>
+                  Assigned and emailed {assignResult.assigned} {assignResult.assigned === 1 ? "person" : "people"}.
+                  {assignResult.invalidLines.length > 0 && ` Skipped ${assignResult.invalidLines.length} line(s) that weren't valid emails.`}
+                  {assignResult.emailFailures.length > 0 && ` Saved, but the email failed to send to: ${assignResult.emailFailures.join(", ")}.`}
+                </p>
+              )}
+
+              <div style={{ fontFamily: "var(--font-heading)", fontSize: 22, margin: "var(--space-8) 0 var(--space-2)" }}>Assignments</div>
+              {assignments && assignments.length > 0 && (
+                <table className="table" style={{ width: "100%" }}>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Assigned</th>
+                      <th>Reminders sent</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {assignments.map((a) => (
+                      <tr key={a.id}>
+                        <td>{a.name || "—"}</td>
+                        <td>{a.email}</td>
+                        <td className="text-muted">{new Date(a.assignedAt).toLocaleDateString()}</td>
+                        <td>{a.reminderCount}</td>
+                        <td>
+                          <span className={`tag ${a.completedAt ? "tag-accent-2" : "tag-outline"}`}>{a.completedAt ? "Completed" : "Pending"}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+              {assignments && assignments.length === 0 && (
+                <div className="card">
+                  <p className="card-body">No one has been assigned yet.</p>
                 </div>
               )}
             </>
